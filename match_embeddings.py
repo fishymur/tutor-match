@@ -2,7 +2,7 @@ from sentence_transformers import SentenceTransformer, util
 
 model = SentenceTransformer("all-mpnet-base-v2")
 
-# Each tutor now has: tz (their UTC offset) and hours (start, end) in THEIR local time.
+# Tutor data with thier expertise, rating, price, timezone, and hours they are availible
 tutors = [
     {"name": "Ada",      "expertise": "probability theory, measure theory, stochastic processes, random variables", "rating": 4.9, "rate": 35, "tz": -8, "hours": (17, 22)},
     {"name": "Bayes",    "expertise": "Bayesian statistics, statistical inference, MCMC sampling, probabilistic modeling", "rating": 4.4, "rate": 60, "tz": 1,  "hours": (9, 18)},
@@ -20,21 +20,23 @@ tutors = [
 
 tutor_embeddings = model.encode([t["expertise"] for t in tutors])
 
-# ---- The student's situation (your design knobs) ----
-STUDENT_TZ = -8             # student in UTC-8 (California)
-STUDENT_TIME = (18, 21)    # wants a session 6pm-9pm THEIR local time
+# Query preference and weighting used to evaluate top results
+STUDENT_TZ = -8 
+STUDENT_TIME = (18, 21)
 STUDENT_MAX_BUDGET = 50
 WEIGHTS = {"semantic": 0.60, "rating": 0.25, "price": 0.15}
 TOP_K = 5
 
+# Converting timezones and saving availible time
 def utc_slots(start, end, tz):
     """Each available hour, converted to UTC, as a set of integers 0-23."""
     return {(hour - tz) % 24 for hour in range(start, end)}
 
+# Normalization function 
 def clamp01(x):
     return max(0.0, min(1.0, x))
 
-# Convert the student's window, and every tutor's window, to UTC once up front.
+# Timezone conversions
 student_slots = utc_slots(STUDENT_TIME[0], STUDENT_TIME[1], STUDENT_TZ)
 for t in tutors:
     t["slots"] = utc_slots(t["hours"][0], t["hours"][1], t["tz"])
@@ -47,6 +49,7 @@ while True:
     query_embedding = model.encode(query)
     semantic_scores = util.cos_sim(query_embedding, tutor_embeddings)[0].tolist()
 
+    # Hard filtering of tutors based on query
     results = []
     removed = 0
     for tutor, semantic in zip(tutors, semantic_scores):
@@ -55,7 +58,8 @@ while True:
         if not overlap:
             removed += 1
             continue
-
+        
+        # Normalize and weigh each variable
         meaning_fit = clamp01(semantic)
         rating_fit  = tutor["rating"] / 5.0
         price_fit   = clamp01((STUDENT_MAX_BUDGET - tutor["rate"]) / STUDENT_MAX_BUDGET)
@@ -68,6 +72,7 @@ while True:
 
     results.sort(key=lambda r: r["final"], reverse=True)
 
+    # Clean print statement
     print(f'\nTop {TOP_K} for "{query}"  '
           f'(budget ${STUDENT_MAX_BUDGET}, your time {STUDENT_TIME[0]}:00-{STUDENT_TIME[1]}:00):')
     print(f"  ({removed} tutors removed — unavailable in your window)")
