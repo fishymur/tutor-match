@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>TutorMatch</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 640px; margin: 60px auto; padding: 0 20px; }
+    h1 { margin-bottom: 4px; }
+    p.sub { color: #666; margin-top: 0; }
+    .searchbar { display: flex; gap: 8px; margin: 24px 0; }
+    input { flex: 1; padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 6px; }
+    button { padding: 10px 18px; font-size: 16px; border: 0; border-radius: 6px; background: #2563eb; color: #fff; cursor: pointer; }
+    button:disabled { background: #aaa; }
+    .card { border: 1px solid #eee; border-radius: 8px; padding: 14px 16px; margin: 10px 0; }
+    .card h3 { margin: 0 0 4px; }
+    .meta { color: #666; font-size: 14px; }
+    .rewritten { color: #888; font-size: 13px; font-style: italic; margin: 8px 0 16px; }
+  </style>
+</head>
+<body>
+  <h1>TutorMatch</h1>
+  <p class="sub">Describe what you need help with — in plain words.</p>
+
+  <div class="searchbar">
+    <input id="q" placeholder="e.g. why won't my neural network converge?" />
+    <button id="go" onclick="runSearch()">Search</button>
+  </div>
+
+  <div id="results"></div>
+
+  <script>
+    async function runSearch() {
+      const query = document.getElementById("q").value;
+      const button = document.getElementById("go");
+      const resultsDiv = document.getElementById("results");
+      if (!query) return;
+
+      button.disabled = true;
+      resultsDiv.innerHTML = "<p>Searching…</p>";
+
+      // Call your backend endpoint.
+      const response = await fetch("/search?q=" + encodeURIComponent(query));
+      const data = await response.json();
+
+      // Build the results HTML.
+      let html = '<p class="rewritten">Interpreted as: ' + data.rewritten + '</p>';
+      for (const t of data.results) {
+        html +=
+          '<div class="card">' +
+            '<h3>' + t.name + '</h3>' +
+            '<div class="meta">' + t.expertise + '</div>' +
+            '<div class="meta">match ' + t.score + ' · ⭐ ' + t.rating + ' · $' + t.rate + '/hr</div>' +
+          '</div>';
+      }
+      resultsDiv.innerHTML = html;
+      button.disabled = false;
+    }
+  </script>
+</body>
+</html>

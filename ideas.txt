@@ -1,3 +1,5 @@
 1. Have weightin on how confident a tutor is on a subject rather than just saying that they "know" it
 2. Filtering for price, education level, etc 
 3. Make the time category much more dynamic
+4. Make pages for each search instead of just top 5
+5. 
