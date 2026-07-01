@@ -6,80 +6,83 @@
   <title>TutorMatch</title>
   <style>
     * { box-sizing: border-box; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
-      background: #f6f7f9; color: #1a1a2e; margin: 0; padding: 48px 20px 80px;
-    }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+           background: #f6f7f9; color: #1a1a2e; margin: 0; padding: 48px 20px 80px; }
     .wrap { max-width: 660px; margin: 0 auto; }
-
     .logo { font-size: 28px; font-weight: 700; letter-spacing: -0.02em; }
     .logo span { color: #4f46e5; }
     .tagline { color: #6b7280; margin: 6px 0 26px; font-size: 15px; }
-
     .searchbar { display: flex; gap: 10px; }
-    #q {
-      flex: 1; padding: 13px 16px; font-size: 16px; background: #fff;
-      border: 1px solid #d7dae0; border-radius: 10px; outline: none;
-      transition: border-color .15s, box-shadow .15s;
-    }
+    #q { flex: 1; padding: 13px 16px; font-size: 16px; background: #fff; border: 1px solid #d7dae0;
+         border-radius: 10px; outline: none; transition: border-color .15s, box-shadow .15s; }
     #q:focus { border-color: #4f46e5; box-shadow: 0 0 0 3px rgba(79,70,229,.15); }
-    #go {
-      padding: 0 22px; font-size: 15px; font-weight: 600; color: #fff; cursor: pointer;
-      border: 0; border-radius: 10px; background: #4f46e5; transition: background .15s;
-    }
+    #go { padding: 0 22px; font-size: 15px; font-weight: 600; color: #fff; cursor: pointer;
+          border: 0; border-radius: 10px; background: #4f46e5; transition: background .15s; }
     #go:hover { background: #4338ca; }
     #go:disabled { background: #a5a8b3; cursor: default; }
-
     .examples { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 14px; }
     .examples > span { color: #9ca3af; font-size: 13px; }
-    .chip {
-      font-size: 13px; color: #4b5563; background: #fff; border: 1px solid #e2e4e9;
-      padding: 6px 12px; border-radius: 20px; cursor: pointer; transition: all .15s;
-    }
+    .chip { font-size: 13px; color: #4b5563; background: #fff; border: 1px solid #e2e4e9;
+            padding: 6px 12px; border-radius: 20px; cursor: pointer; transition: all .15s; }
     .chip:hover { border-color: #4f46e5; color: #4f46e5; }
 
+    .controls { display: flex; justify-content: space-between; align-items: center;
+                gap: 12px; margin: 22px 0 6px; flex-wrap: wrap; }
+    .sortbar { display: flex; gap: 6px; align-items: center; }
+    .sortbar > span { color: #9ca3af; font-size: 13px; margin-right: 2px; }
+    .sortpill { font-size: 13px; padding: 6px 12px; border-radius: 20px; border: 1px solid #e2e4e9;
+                background: #fff; color: #4b5563; cursor: pointer; }
+    .sortpill.active { background: #4f46e5; border-color: #4f46e5; color: #fff; }
+
+    details.filters { position: relative; }
+    details.filters summary { list-style: none; cursor: pointer; font-size: 13px; color: #4b5563;
+        border: 1px solid #e2e4e9; background: #fff; padding: 6px 12px; border-radius: 20px; user-select: none; }
+    details.filters summary::-webkit-details-marker { display: none; }
+    details.filters[open] summary { border-color: #4f46e5; color: #4f46e5; }
+    .filter-pop { position: absolute; right: 0; top: 40px; z-index: 10; width: 300px;
+        background: #fff; border: 1px solid #e2e4e9; border-radius: 12px; padding: 14px;
+        box-shadow: 0 8px 28px rgba(16,24,40,.12); display: grid; gap: 13px; }
+    .filter-pop .field label { display: block; font-size: 12px; color: #374151; margin-bottom: 5px; }
+    .filter-pop input[type=number] { width: 100%; padding: 7px 9px; font-size: 13px;
+        border: 1px solid #d7dae0; border-radius: 7px; }
+    .filter-pop input[type=range] { width: 100%; accent-color: #4f46e5; }
+    .filter-pop .row { display: flex; align-items: center; gap: 7px; }
+    .filter-pop .row span { color: #9ca3af; font-size: 12px; }
+    .seg { display: inline-flex; border: 1px solid #e2e4e9; border-radius: 8px; overflow: hidden; }
+    .seg-btn { font-size: 12px; padding: 6px 10px; background: #fff; border: 0; cursor: pointer; color: #4b5563; }
+    .seg-btn + .seg-btn { border-left: 1px solid #e2e4e9; }
+    .seg-btn.active { background: #4f46e5; color: #fff; }
+    .avail-line { display: flex; align-items: center; gap: 6px; font-size: 13px; color: #374151; }
+    .avail-line select { padding: 5px 6px; font-size: 12px; border: 1px solid #d7dae0; border-radius: 6px; }
+
+    .tz-note { color: #9ca3af; font-size: 12px; margin: 2px 2px 14px; }
     .status { display: flex; align-items: center; gap: 12px; color: #6b7280; padding: 30px 4px; }
-    .spinner {
-      width: 20px; height: 20px; border: 3px solid #e3e5ea; border-top-color: #4f46e5;
-      border-radius: 50%; animation: spin .7s linear infinite;
-    }
+    .spinner { width: 20px; height: 20px; border: 3px solid #e3e5ea; border-top-color: #4f46e5;
+               border-radius: 50%; animation: spin .7s linear infinite; }
     @keyframes spin { to { transform: rotate(360deg); } }
-
-    .error {
-      background: #fef2f2; border: 1px solid #fecaca; color: #b91c1c;
-      padding: 14px 16px; border-radius: 10px; margin-top: 22px; font-size: 15px;
-    }
-
-    .rewrite {
-      background: #eef2ff; border: 1px solid #e0e7ff; border-radius: 10px;
-      padding: 12px 14px; margin: 24px 0 10px; font-size: 14px; color: #4338ca; line-height: 1.5;
-    }
-    .rewrite-label {
-      display: inline-block; font-size: 11px; font-weight: 700; text-transform: uppercase;
-      letter-spacing: .05em; color: #6366f1; margin-right: 8px;
-    }
+    .error { background: #fef2f2; border: 1px solid #fecaca; color: #b91c1c;
+             padding: 14px 16px; border-radius: 10px; margin-top: 22px; font-size: 15px; }
+    .rewrite { background: #eef2ff; border: 1px solid #e0e7ff; border-radius: 10px;
+               padding: 12px 14px; margin: 10px 0 8px; font-size: 14px; color: #4338ca; line-height: 1.5; }
+    .rewrite-label { display: inline-block; font-size: 11px; font-weight: 700; text-transform: uppercase;
+                     letter-spacing: .05em; color: #6366f1; margin-right: 8px; }
     .subhint { color: #9ca3af; font-size: 13px; margin: 2px 2px 14px; }
-
-    .card {
-      display: flex; gap: 14px; background: #fff; border: 1px solid #e8eaee;
-      border-radius: 12px; padding: 16px; margin-bottom: 12px;
-      box-shadow: 0 1px 2px rgba(16,24,40,.04); transition: box-shadow .15s, transform .15s;
-    }
+    .card { display: flex; gap: 14px; background: #fff; border: 1px solid #e8eaee; border-radius: 12px;
+            padding: 16px; margin-bottom: 12px; box-shadow: 0 1px 2px rgba(16,24,40,.04);
+            transition: box-shadow .15s, transform .15s; }
     .card:hover { box-shadow: 0 4px 14px rgba(16,24,40,.08); transform: translateY(-1px); }
-    .rank {
-      flex: none; width: 30px; height: 30px; border-radius: 8px; background: #eef2ff;
-      color: #4f46e5; font-weight: 700; font-size: 14px;
-      display: flex; align-items: center; justify-content: center;
-    }
+    .rank { flex: none; width: 30px; height: 30px; border-radius: 8px; background: #eef2ff; color: #4f46e5;
+            font-weight: 700; font-size: 14px; display: flex; align-items: center; justify-content: center; }
     .card-body { flex: 1; min-width: 0; }
     .card-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
     .card-head h3 { margin: 0; font-size: 17px; }
-    .pills { display: flex; gap: 6px; flex: none; }
-    .pill {
-      font-size: 12px; color: #4b5563; background: #f3f4f6;
-      padding: 3px 8px; border-radius: 20px; white-space: nowrap;
-    }
-    .expertise { color: #6b7280; font-size: 14px; margin: 5px 0 12px; line-height: 1.45; }
+    .pills { display: flex; gap: 6px; flex: none; align-items: center; }
+    .pill { font-size: 12px; color: #4b5563; background: #f3f4f6; padding: 3px 8px;
+            border-radius: 20px; white-space: nowrap; }
+    .pill-now { background: #dcfce7; color: #15803d; font-weight: 600; }
+    .expertise { color: #6b7280; font-size: 14px; margin: 5px 0 8px; line-height: 1.45; }
+    .avail { color: #6b7280; font-size: 13px; margin-bottom: 12px; }
+    .avail b { color: #059669; font-weight: 600; }
     .match { display: flex; align-items: center; gap: 10px; }
     .match-track { flex: 1; height: 6px; background: #edeef2; border-radius: 999px; overflow: hidden; }
     .match-fill { height: 100%; background: #4f46e5; border-radius: 999px; transition: width .4s ease; }
@@ -98,11 +101,55 @@
 
     <div class="examples">
       <span>Try:</span>
-      <button class="chip" onclick="example('make my code faster as the input grows')">make my code faster</button>
-      <button class="chip" onclick="example('proving a sequence converges')">proving convergence</button>
-      <button class="chip" onclick="example('what is a quotient group')">quotient groups</button>
+      <button class="chip" onclick="example('make my code faster as the input grows')">faster code</button>
+      <button class="chip" onclick="example('help me conjugate Spanish verbs')">Spanish verbs</button>
+      <button class="chip" onclick="example('quantum wave functions')">quantum mechanics</button>
+      <button class="chip" onclick="example('how do I analyze a poem')">analyzing poetry</button>
     </div>
 
+    <div class="controls">
+      <div class="sortbar">
+        <span>Sort:</span>
+        <button class="sortpill active" onclick="setSort('match', this)">Best match</button>
+        <button class="sortpill" onclick="setSort('rating', this)">Highest rated</button>
+        <button class="sortpill" onclick="setSort('price', this)">Best value</button>
+      </div>
+
+      <details class="filters">
+        <summary>Filters ▾</summary>
+        <div class="filter-pop">
+          <div class="field">
+            <label>Availability</label>
+            <div class="seg" id="availSeg">
+              <button type="button" class="seg-btn" data-mode="any" onclick="setAvail('any', this)">Anytime</button>
+              <button type="button" class="seg-btn active" data-mode="now" onclick="setAvail('now', this)">Available now</button>
+              <button type="button" class="seg-btn" data-mode="range" onclick="setAvail('range', this)">Time range</button>
+            </div>
+            <div class="avail-line" id="availRange" style="display:none; margin-top:8px;">
+              <select id="start"></select><span>to</span><select id="end"></select>
+            </div>
+          </div>
+          <div class="field">
+            <label>Price ($/hr)</label>
+            <div class="row">
+              <input type="number" id="minPrice" placeholder="min" min="0" />
+              <span>to</span>
+              <input type="number" id="maxPrice" placeholder="max" min="0" />
+            </div>
+          </div>
+          <div class="field">
+            <label>Min rating: <b id="minRatingVal">any</b></label>
+            <input type="range" id="minRating" min="0" max="5" step="0.1" value="0" oninput="updateLabels()" />
+          </div>
+          <div class="field">
+            <label>Min topic match: <b id="minMatchVal">any</b></label>
+            <input type="range" id="minMatch" min="0" max="100" step="5" value="0" oninput="updateLabels()" />
+          </div>
+        </div>
+      </details>
+    </div>
+
+    <div class="tz-note" id="tzNote"></div>
     <div id="results"></div>
   </div>
 
@@ -110,37 +157,94 @@
     const input = document.getElementById("q");
     const button = document.getElementById("go");
     const resultsDiv = document.getElementById("results");
+    let currentSort = "match";
+    let availMode = "now";
 
-    // Let the Enter key trigger a search, not just the button.
+    // --- Auto-detect the user's UTC offset from their browser (DST-aware) ---
+    const userTz = -new Date().getTimezoneOffset() / 60;
+    const zoneName = Intl.DateTimeFormat().resolvedOptions().timeZone || "your timezone";
+    document.getElementById("tzNote").textContent =
+      `Times shown for ${zoneName} (UTC${userTz >= 0 ? "+" : ""}${userTz}).`;
+
+    // Fill the time-range dropdowns (12-hour labels), default to now -> 3h later.
+    (function initHours() {
+      const s = document.getElementById("start"), e = document.getElementById("end");
+      const label12 = (h) => {
+        const suffix = h < 12 ? "AM" : "PM";
+        let hr = h % 12; if (hr === 0) hr = 12;
+        return `${hr}:00 ${suffix}`;
+      };
+      for (let h = 0; h < 24; h++) {
+        s.add(new Option(label12(h), h));
+        e.add(new Option(label12(h), h));
+      }
+      const nowHour = new Date().getHours();
+      s.value = nowHour;
+      e.value = (nowHour + 3) % 24;
+    })();
+
+    function updateLabels() {
+      const r = parseFloat(document.getElementById("minRating").value);
+      document.getElementById("minRatingVal").textContent = r > 0 ? r.toFixed(1) + "★" : "any";
+      const m = parseFloat(document.getElementById("minMatch").value);
+      document.getElementById("minMatchVal").textContent = m > 0 ? m + "%" : "any";
+    }
+
+    function setSort(mode, el) {
+      currentSort = mode;
+      document.querySelectorAll(".sortpill").forEach(b => b.classList.remove("active"));
+      el.classList.add("active");
+      if (input.value.trim()) runSearch();
+    }
+
+    function setAvail(mode, el) {
+      availMode = mode;
+      document.querySelectorAll("#availSeg .seg-btn").forEach(b => b.classList.remove("active"));
+      el.classList.add("active");
+      document.getElementById("availRange").style.display = (mode === "range") ? "flex" : "none";
+      if (input.value.trim()) runSearch();
+    }
+
     input.addEventListener("keydown", (e) => { if (e.key === "Enter") runSearch(); });
+    function example(text) { input.value = text; runSearch(); }
 
-    function example(text) {
-      input.value = text;
-      runSearch();
+    function buildParams(query) {
+      const p = new URLSearchParams();
+      p.set("q", query);
+      p.set("sort", currentSort);
+      p.set("tz", userTz);
+      if (availMode === "now") {
+        p.set("only_now", "true");
+      } else if (availMode === "range") {
+        p.set("start", document.getElementById("start").value);
+        p.set("end", document.getElementById("end").value);
+      }
+      const minP = document.getElementById("minPrice").value;
+      const maxP = document.getElementById("maxPrice").value;
+      if (minP) p.set("min_price", minP);
+      if (maxP) p.set("max_price", maxP);
+      const minR = document.getElementById("minRating").value;
+      if (parseFloat(minR) > 0) p.set("min_rating", minR);
+      const minM = document.getElementById("minMatch").value;
+      if (parseFloat(minM) > 0) p.set("min_match", minM);
+      return p;
     }
 
     async function runSearch() {
       const query = input.value.trim();
       if (!query) return;
-
       button.disabled = true;
       resultsDiv.innerHTML = `<div class="status"><div class="spinner"></div><span>Finding tutors…</span></div>`;
-
       try {
-        const response = await fetch("/search?q=" + encodeURIComponent(query));
-
-        // The server answered, but with an error status (e.g. our friendly 502).
+        const response = await fetch("/search?" + buildParams(query).toString());
         if (!response.ok) {
           let message = "Something went wrong. Please try again.";
           try { const err = await response.json(); if (err.error) message = err.error; } catch (_) {}
           resultsDiv.innerHTML = `<div class="error">${message}</div>`;
           return;
         }
-
-        const data = await response.json();
-        renderResults(data);
+        renderResults(await response.json());
       } catch (e) {
-        // Couldn't reach the server at all (network down, server not running).
         resultsDiv.innerHTML = `<div class="error">Couldn't reach the server. Check your connection and try again.</div>`;
       } finally {
         button.disabled = false;
@@ -149,30 +253,28 @@
 
     function renderResults(data) {
       if (!data.results || data.results.length === 0) {
-        resultsDiv.innerHTML = `<div class="error">No tutors found for that request.</div>`;
+        resultsDiv.innerHTML = `<div class="error">No tutors match these filters. Try switching availability to Anytime, widening the price range, or lowering the minimum rating or match.</div>`;
         return;
       }
-
-      const rewrite = `
-        <div class="rewrite">
-          <span class="rewrite-label">Interpreted as</span>${data.rewritten}
-        </div>
-        <div class="subhint">Ranked by topic match, rating, and price.</div>`;
-
+      const header = `
+        <div class="rewrite"><span class="rewrite-label">Interpreted as</span>${data.rewritten}</div>
+        <div class="subhint">Showing ${data.results.length} of ${data.total_matched} matching tutors.</div>`;
       const cards = data.results.map((t, i) => {
         const matchPct = Math.round(t.meaning * 100);
+        const nowPill = t.available_now ? `<span class="pill pill-now">● Now</span>` : "";
+        const availText = t.available_now
+          ? `🟢 <b>Available now</b> · ${t.availability}`
+          : `🕑 ${t.availability}`;
         return `
           <div class="card">
             <div class="rank">${i + 1}</div>
             <div class="card-body">
               <div class="card-head">
                 <h3>${t.name}</h3>
-                <div class="pills">
-                  <span class="pill">★ ${t.rating}</span>
-                  <span class="pill">$${t.rate}/hr</span>
-                </div>
+                <div class="pills">${nowPill}<span class="pill">★ ${t.rating}</span><span class="pill">$${t.rate}/hr</span></div>
               </div>
               <p class="expertise">${t.expertise}</p>
+              <div class="avail">${availText}</div>
               <div class="match">
                 <div class="match-track"><div class="match-fill" style="width:${matchPct}%"></div></div>
                 <span class="match-label">${matchPct}% topic match</span>
@@ -180,8 +282,7 @@
             </div>
           </div>`;
       }).join("");
-
-      resultsDiv.innerHTML = rewrite + cards;
+      resultsDiv.innerHTML = header + cards;
     }
   </script>
 </body>

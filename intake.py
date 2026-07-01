@@ -1,10 +1,17 @@
 from anthropic import Anthropic
 
-# Reads ANTHROPIC_API_KEY from enviroment
 client = Anthropic()
 
-# Uses claude haiku to frame query into academic topics used for embedding precisely
+# Cache rewrites so repeating a query (e.g. changing sort or filters) doesn't
+# re-call the API — the same query text always maps to the same rewrite.
+_rewrite_cache = {}
+
 def rewrite_query(raw_query):
+    """Expand a vague, student-phrased request into precise topic keywords."""
+    key = raw_query.strip().lower()
+    if key in _rewrite_cache:
+        return _rewrite_cache[key]
+
     prompt = (
         "A student described what they need help with, often vaguely or in plain English. "
         "Rewrite it as a short comma-separated list of the precise academic topics and "
@@ -17,4 +24,6 @@ def rewrite_query(raw_query):
         max_tokens=100,
         messages=[{"role": "user", "content": prompt}],
     )
-    return message.content[0].text.strip()
+    result = message.content[0].text.strip()
+    _rewrite_cache[key] = result
+    return result

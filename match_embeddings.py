@@ -24,7 +24,7 @@ tutor_embeddings = model.encode([t["expertise"] for t in tutors])
 STUDENT_TZ = -8 
 STUDENT_TIME = (18, 21)
 STUDENT_MAX_BUDGET = 50
-WEIGHTS = {"semantic": 0.60, "rating": 0.25, "price": 0.15}
+WEIGHTS = {"semantic": 0.70, "rating": 0.20, "price": 0.10}
 TOP_K = 5
 
 # Converting timezones and saving availible time

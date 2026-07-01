@@ -2,4 +2,4 @@
 2. Filtering for price, education level, etc 
 3. Make the time category much more dynamic
 4. Make pages for each search instead of just top 5
-5. 
+5. Add way more tutors 
