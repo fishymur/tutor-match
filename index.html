@@ -20,26 +20,38 @@
           border: 0; border-radius: 10px; background: #4f46e5; transition: background .15s; }
     #go:hover { background: #4338ca; }
     #go:disabled { background: #a5a8b3; cursor: default; }
-    .examples { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 14px; }
-    .examples > span { color: #9ca3af; font-size: 13px; }
-    .chip { font-size: 13px; color: #4b5563; background: #fff; border: 1px solid #e2e4e9;
-            padding: 6px 12px; border-radius: 20px; cursor: pointer; transition: all .15s; }
-    .chip:hover { border-color: #4f46e5; color: #4f46e5; }
+    .examples { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; margin-top: 8px; }
+    .examples > span { color: #9ca3af; font-size: 12px; }
+    .chip { font-size: 12px; color: #6b7280; background: transparent; border: 0; padding: 1px 2px;
+            cursor: pointer; transition: color .15s; text-decoration: underline;
+            text-decoration-color: #d7dae0; text-underline-offset: 2px; }
+    .chip:hover { color: #4f46e5; text-decoration-color: #4f46e5; }
 
-    .controls { display: flex; justify-content: space-between; align-items: center;
-                gap: 12px; margin: 22px 0 6px; flex-wrap: wrap; }
-    .sortbar { display: flex; gap: 6px; align-items: center; }
-    .sortbar > span { color: #9ca3af; font-size: 13px; margin-right: 2px; }
-    .sortpill { font-size: 13px; padding: 6px 12px; border-radius: 20px; border: 1px solid #e2e4e9;
-                background: #fff; color: #4b5563; cursor: pointer; }
-    .sortpill.active { background: #4f46e5; border-color: #4f46e5; color: #fff; }
+    .controls { display: flex; align-items: center; gap: 8px; margin: 22px 0 4px; flex-wrap: wrap; }
+    .ctrl-label { color: #9ca3af; font-size: 13px; }
 
-    details.filters { position: relative; }
+    /* Sort dropdown */
+    .sortwrap { position: relative; }
+    .sortwrap select { appearance: none; font-size: 13px; color: #1a1a2e; background: #fff;
+        border: 1px solid #e2e4e9; border-radius: 8px; padding: 7px 30px 7px 12px; cursor: pointer; }
+    .sortwrap select:focus { outline: none; border-color: #4f46e5; }
+    .sortwrap::after { content: "▾"; position: absolute; right: 11px; top: 50%; transform: translateY(-50%);
+        pointer-events: none; color: #9ca3af; font-size: 12px; }
+    /* Availability shortcut */
+    .now-check { display: inline-flex; align-items: center; gap: 5px; font-size: 13px; color: #4b5563;
+        padding: 0 2px; cursor: pointer; user-select: none; }
+    .now-check:hover { color: #4f46e5; }
+    .now-check input { width: 13px; height: 13px; margin: 0; accent-color: #4f46e5; cursor: pointer; }
+    .avail-range { display: flex; align-items: center; gap: 7px; }
+    .avail-range select { flex: 1; padding: 7px 8px; font-size: 13px; border: 1px solid #d7dae0; border-radius: 7px; }
+
+    /* Remaining filters popover */
+    details.filters { position: relative; margin-left: auto; }
     details.filters summary { list-style: none; cursor: pointer; font-size: 13px; color: #4b5563;
-        border: 1px solid #e2e4e9; background: #fff; padding: 6px 12px; border-radius: 20px; user-select: none; }
+        border: 1px solid #e2e4e9; background: #fff; padding: 7px 12px; border-radius: 8px; user-select: none; }
     details.filters summary::-webkit-details-marker { display: none; }
     details.filters[open] summary { border-color: #4f46e5; color: #4f46e5; }
-    .filter-pop { position: absolute; right: 0; top: 40px; z-index: 10; width: 300px;
+    .filter-pop { position: absolute; right: 0; top: 42px; z-index: 10; width: 280px;
         background: #fff; border: 1px solid #e2e4e9; border-radius: 12px; padding: 14px;
         box-shadow: 0 8px 28px rgba(16,24,40,.12); display: grid; gap: 13px; }
     .filter-pop .field label { display: block; font-size: 12px; color: #374151; margin-bottom: 5px; }
@@ -48,14 +60,8 @@
     .filter-pop input[type=range] { width: 100%; accent-color: #4f46e5; }
     .filter-pop .row { display: flex; align-items: center; gap: 7px; }
     .filter-pop .row span { color: #9ca3af; font-size: 12px; }
-    .seg { display: inline-flex; border: 1px solid #e2e4e9; border-radius: 8px; overflow: hidden; }
-    .seg-btn { font-size: 12px; padding: 6px 10px; background: #fff; border: 0; cursor: pointer; color: #4b5563; }
-    .seg-btn + .seg-btn { border-left: 1px solid #e2e4e9; }
-    .seg-btn.active { background: #4f46e5; color: #fff; }
-    .avail-line { display: flex; align-items: center; gap: 6px; font-size: 13px; color: #374151; }
-    .avail-line select { padding: 5px 6px; font-size: 12px; border: 1px solid #d7dae0; border-radius: 6px; }
 
-    .tz-note { color: #9ca3af; font-size: 12px; margin: 2px 2px 14px; }
+    .tz-note { color: #a3aab6; font-size: 10.5px; margin: 3px 2px 9px; line-height: 1.2; }
     .status { display: flex; align-items: center; gap: 12px; color: #6b7280; padding: 30px 4px; }
     .spinner { width: 20px; height: 20px; border: 3px solid #e3e5ea; border-top-color: #4f46e5;
                border-radius: 50%; animation: spin .7s linear infinite; }
@@ -108,42 +114,45 @@
     </div>
 
     <div class="controls">
-      <div class="sortbar">
-        <span>Sort:</span>
-        <button class="sortpill active" onclick="setSort('match', this)">Best match</button>
-        <button class="sortpill" onclick="setSort('rating', this)">Highest rated</button>
-        <button class="sortpill" onclick="setSort('price', this)">Best value</button>
+      <span class="ctrl-label">Sort</span>
+      <div class="sortwrap">
+        <select id="sortSelect" onchange="onSortChange()">
+          <option value="match">Best match</option>
+          <option value="rating">Highest rated</option>
+          <option value="price">Best value</option>
+        </select>
       </div>
+      <label class="now-check" title="Only show tutors who are available right now">
+        <input type="checkbox" id="onlyNow" onchange="runSearchIfReady()" />
+        <span>Available now</span>
+      </label>
 
       <details class="filters">
         <summary>Filters ▾</summary>
         <div class="filter-pop">
           <div class="field">
-            <label>Availability</label>
-            <div class="seg" id="availSeg">
-              <button type="button" class="seg-btn" data-mode="any" onclick="setAvail('any', this)">Anytime</button>
-              <button type="button" class="seg-btn active" data-mode="now" onclick="setAvail('now', this)">Available now</button>
-              <button type="button" class="seg-btn" data-mode="range" onclick="setAvail('range', this)">Time range</button>
-            </div>
-            <div class="avail-line" id="availRange" style="display:none; margin-top:8px;">
-              <select id="start"></select><span>to</span><select id="end"></select>
+            <label>Price ($/hr)</label>
+            <div class="row">
+              <input type="number" id="minPrice" placeholder="min" min="0" oninput="runSearchIfReady()" />
+              <span>to</span>
+              <input type="number" id="maxPrice" placeholder="max" min="0" oninput="runSearchIfReady()" />
             </div>
           </div>
           <div class="field">
-            <label>Price ($/hr)</label>
-            <div class="row">
-              <input type="number" id="minPrice" placeholder="min" min="0" />
+            <label>Availability range</label>
+            <div class="avail-range">
+              <select id="start" onchange="onRangeChange()"></select>
               <span>to</span>
-              <input type="number" id="maxPrice" placeholder="max" min="0" />
+              <select id="end" onchange="onRangeChange()"></select>
             </div>
           </div>
           <div class="field">
             <label>Min rating: <b id="minRatingVal">any</b></label>
-            <input type="range" id="minRating" min="0" max="5" step="0.1" value="0" oninput="updateLabels()" />
+            <input type="range" id="minRating" min="0" max="5" step="0.1" value="0" oninput="updateLabels(); runSearchIfReady()" />
           </div>
           <div class="field">
             <label>Min topic match: <b id="minMatchVal">any</b></label>
-            <input type="range" id="minMatch" min="0" max="100" step="5" value="0" oninput="updateLabels()" />
+            <input type="range" id="minMatch" min="0" max="100" step="5" value="0" oninput="updateLabels(); runSearchIfReady()" />
           </div>
         </div>
       </details>
@@ -157,8 +166,12 @@
     const input = document.getElementById("q");
     const button = document.getElementById("go");
     const resultsDiv = document.getElementById("results");
-    let currentSort = "match";
-    let availMode = "now";
+    let rangeChanged = false;
+
+    function currentSort() { return document.getElementById("sortSelect").value; }
+    function onSortChange() {
+      if (input.value.trim()) runSearch();
+    }
 
     // --- Auto-detect the user's UTC offset from their browser (DST-aware) ---
     const userTz = -new Date().getTimezoneOffset() / 60;
@@ -166,7 +179,6 @@
     document.getElementById("tzNote").textContent =
       `Times shown for ${zoneName} (UTC${userTz >= 0 ? "+" : ""}${userTz}).`;
 
-    // Fill the time-range dropdowns (12-hour labels), default to now -> 3h later.
     (function initHours() {
       const s = document.getElementById("start"), e = document.getElementById("end");
       const label12 = (h) => {
@@ -190,19 +202,13 @@
       document.getElementById("minMatchVal").textContent = m > 0 ? m + "%" : "any";
     }
 
-    function setSort(mode, el) {
-      currentSort = mode;
-      document.querySelectorAll(".sortpill").forEach(b => b.classList.remove("active"));
-      el.classList.add("active");
+    function runSearchIfReady() {
       if (input.value.trim()) runSearch();
     }
 
-    function setAvail(mode, el) {
-      availMode = mode;
-      document.querySelectorAll("#availSeg .seg-btn").forEach(b => b.classList.remove("active"));
-      el.classList.add("active");
-      document.getElementById("availRange").style.display = (mode === "range") ? "flex" : "none";
-      if (input.value.trim()) runSearch();
+    function onRangeChange() {
+      rangeChanged = true;
+      runSearchIfReady();
     }
 
     input.addEventListener("keydown", (e) => { if (e.key === "Enter") runSearch(); });
@@ -211,11 +217,11 @@
     function buildParams(query) {
       const p = new URLSearchParams();
       p.set("q", query);
-      p.set("sort", currentSort);
+      p.set("sort", currentSort());
       p.set("tz", userTz);
-      if (availMode === "now") {
+      if (document.getElementById("onlyNow").checked) {
         p.set("only_now", "true");
-      } else if (availMode === "range") {
+      } else if (rangeChanged) {
         p.set("start", document.getElementById("start").value);
         p.set("end", document.getElementById("end").value);
       }
@@ -253,7 +259,7 @@
 
     function renderResults(data) {
       if (!data.results || data.results.length === 0) {
-        resultsDiv.innerHTML = `<div class="error">No tutors match these filters. Try switching availability to Anytime, widening the price range, or lowering the minimum rating or match.</div>`;
+        resultsDiv.innerHTML = `<div class="error">No tutors match these filters. Try unchecking Available now, widening the availability or price range, or lowering the minimum rating or match.</div>`;
         return;
       }
       const header = `
