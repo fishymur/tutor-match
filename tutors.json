@@ -1,0 +1,1267 @@
+[
+  {
+    "name": "Ada",
+    "expertise": "probability theory, measure theory, stochastic processes, random variables",
+    "rating": 4.6,
+    "rate": 26,
+    "tz": 8,
+    "hours": [
+      12,
+      16
+    ]
+  },
+  {
+    "name": "Bayes",
+    "expertise": "Bayesian statistics, statistical inference, MCMC sampling, probabilistic modeling",
+    "rating": 4.2,
+    "rate": 33,
+    "tz": 8,
+    "hours": [
+      8,
+      12
+    ]
+  },
+  {
+    "name": "Markov",
+    "expertise": "stochastic processes, Markov chains, queueing theory, random walks",
+    "rating": 4.7,
+    "rate": 82,
+    "tz": 2,
+    "hours": [
+      8,
+      12
+    ]
+  },
+  {
+    "name": "Gauss",
+    "expertise": "regression analysis, the normal distribution, least squares, statistical estimation",
+    "rating": 4.6,
+    "rate": 27,
+    "tz": -8,
+    "hours": [
+      8,
+      12
+    ]
+  },
+  {
+    "name": "Fisher",
+    "expertise": "statistical inference, hypothesis testing, experimental design, maximum likelihood",
+    "rating": 4.2,
+    "rate": 57,
+    "tz": 3,
+    "hours": [
+      7,
+      11
+    ]
+  },
+  {
+    "name": "Kolmogorov",
+    "expertise": "probability theory, measure theory, stochastic processes, axiomatic foundations",
+    "rating": 4.6,
+    "rate": 70,
+    "tz": 5,
+    "hours": [
+      19,
+      23
+    ]
+  },
+  {
+    "name": "Grace",
+    "expertise": "real analysis, calculus, limits, continuity, sequences and series",
+    "rating": 4.5,
+    "rate": 39,
+    "tz": 1,
+    "hours": [
+      17,
+      21
+    ]
+  },
+  {
+    "name": "Cauchy",
+    "expertise": "sequences and series, convergence, complex analysis, limits",
+    "rating": 4.3,
+    "rate": 80,
+    "tz": -8,
+    "hours": [
+      20,
+      24
+    ]
+  },
+  {
+    "name": "Weierstrass",
+    "expertise": "rigorous real analysis, epsilon-delta proofs, continuity, uniform convergence",
+    "rating": 4.8,
+    "rate": 69,
+    "tz": 0,
+    "hours": [
+      13,
+      17
+    ]
+  },
+  {
+    "name": "Riemann",
+    "expertise": "integration, real analysis, complex analysis, differential geometry",
+    "rating": 4.3,
+    "rate": 38,
+    "tz": 9,
+    "hours": [
+      13,
+      17
+    ]
+  },
+  {
+    "name": "Euler",
+    "expertise": "differential equations, dynamical systems, mathematical physics",
+    "rating": 4.1,
+    "rate": 49,
+    "tz": -7,
+    "hours": [
+      13,
+      17
+    ]
+  },
+  {
+    "name": "Fourier",
+    "expertise": "Fourier analysis, partial differential equations, signal processing, harmonic analysis",
+    "rating": 4.8,
+    "rate": 63,
+    "tz": -4,
+    "hours": [
+      20,
+      24
+    ]
+  },
+  {
+    "name": "Laplace",
+    "expertise": "integral transforms, differential equations, potential theory, applied mathematics",
+    "rating": 4.0,
+    "rate": 54,
+    "tz": 2,
+    "hours": [
+      8,
+      12
+    ]
+  },
+  {
+    "name": "Navier",
+    "expertise": "fluid dynamics, partial differential equations, continuum mechanics",
+    "rating": 5.0,
+    "rate": 49,
+    "tz": -7,
+    "hours": [
+      16,
+      20
+    ]
+  },
+  {
+    "name": "Noether",
+    "expertise": "abstract algebra, group theory, rings and fields, Galois theory",
+    "rating": 4.3,
+    "rate": 65,
+    "tz": 3,
+    "hours": [
+      13,
+      17
+    ]
+  },
+  {
+    "name": "Galois",
+    "expertise": "field theory, group theory, polynomial equations, symmetry",
+    "rating": 4.6,
+    "rate": 70,
+    "tz": -7,
+    "hours": [
+      7,
+      11
+    ]
+  },
+  {
+    "name": "Hilbert",
+    "expertise": "linear algebra, functional analysis, vector spaces, abstract algebra",
+    "rating": 4.7,
+    "rate": 74,
+    "tz": -4,
+    "hours": [
+      8,
+      12
+    ]
+  },
+  {
+    "name": "Erdos",
+    "expertise": "number theory, combinatorics, discrete mathematics, graph theory",
+    "rating": 4.9,
+    "rate": 80,
+    "tz": -7,
+    "hours": [
+      14,
+      18
+    ]
+  },
+  {
+    "name": "Boole",
+    "expertise": "logic, Boolean algebra, set theory, discrete mathematics",
+    "rating": 4.3,
+    "rate": 65,
+    "tz": 10,
+    "hours": [
+      13,
+      17
+    ]
+  },
+  {
+    "name": "Euclid",
+    "expertise": "Euclidean geometry, geometric proofs, plane and solid geometry",
+    "rating": 4.2,
+    "rate": 47,
+    "tz": -5,
+    "hours": [
+      18,
+      22
+    ]
+  },
+  {
+    "name": "Poincare",
+    "expertise": "topology, differential geometry, manifolds, dynamical systems",
+    "rating": 4.3,
+    "rate": 84,
+    "tz": 5,
+    "hours": [
+      18,
+      22
+    ]
+  },
+  {
+    "name": "Lobachevsky",
+    "expertise": "non-Euclidean geometry, differential geometry, hyperbolic geometry",
+    "rating": 4.1,
+    "rate": 65,
+    "tz": -6,
+    "hours": [
+      16,
+      20
+    ]
+  },
+  {
+    "name": "Dijkstra",
+    "expertise": "algorithms, graph theory, shortest paths, data structures",
+    "rating": 4.7,
+    "rate": 35,
+    "tz": 1,
+    "hours": [
+      14,
+      18
+    ]
+  },
+  {
+    "name": "Knuth",
+    "expertise": "combinatorics, analysis of algorithms, discrete mathematics",
+    "rating": 4.3,
+    "rate": 84,
+    "tz": 5,
+    "hours": [
+      19,
+      23
+    ]
+  },
+  {
+    "name": "Turing",
+    "expertise": "theory of computation, complexity classes, automata, computability",
+    "rating": 4.6,
+    "rate": 68,
+    "tz": -3,
+    "hours": [
+      20,
+      24
+    ]
+  },
+  {
+    "name": "Cook",
+    "expertise": "computational complexity, NP-completeness, complexity classes, reductions",
+    "rating": 4.8,
+    "rate": 39,
+    "tz": 10,
+    "hours": [
+      7,
+      11
+    ]
+  },
+  {
+    "name": "Tarjan",
+    "expertise": "data structures, graph algorithms, dynamic programming, algorithm design",
+    "rating": 4.8,
+    "rate": 50,
+    "tz": -4,
+    "hours": [
+      8,
+      12
+    ]
+  },
+  {
+    "name": "Linus",
+    "expertise": "operating systems, C programming, concurrency, multithreading",
+    "rating": 4.2,
+    "rate": 85,
+    "tz": 3,
+    "hours": [
+      19,
+      23
+    ]
+  },
+  {
+    "name": "Ritchie",
+    "expertise": "C programming, operating systems, Unix, systems programming",
+    "rating": 4.3,
+    "rate": 66,
+    "tz": 1,
+    "hours": [
+      14,
+      18
+    ]
+  },
+  {
+    "name": "Thompson",
+    "expertise": "Unix systems, systems programming, regular expressions, compilers",
+    "rating": 4.9,
+    "rate": 66,
+    "tz": 1,
+    "hours": [
+      9,
+      13
+    ]
+  },
+  {
+    "name": "Lamport",
+    "expertise": "distributed systems, consensus algorithms, logical clocks, fault tolerance",
+    "rating": 4.3,
+    "rate": 40,
+    "tz": 8,
+    "hours": [
+      16,
+      20
+    ]
+  },
+  {
+    "name": "Hopper",
+    "expertise": "compilers, programming language design, parsers, type systems",
+    "rating": 4.5,
+    "rate": 72,
+    "tz": 3,
+    "hours": [
+      14,
+      18
+    ]
+  },
+  {
+    "name": "Backus",
+    "expertise": "programming languages, compilers, functional programming, formal grammars",
+    "rating": 4.9,
+    "rate": 50,
+    "tz": -3,
+    "hours": [
+      10,
+      14
+    ]
+  },
+  {
+    "name": "McCarthy",
+    "expertise": "Lisp, functional programming, language design, symbolic AI",
+    "rating": 5.0,
+    "rate": 33,
+    "tz": 2,
+    "hours": [
+      15,
+      19
+    ]
+  },
+  {
+    "name": "Hinton",
+    "expertise": "deep learning, neural networks, backpropagation, training and optimization",
+    "rating": 4.1,
+    "rate": 28,
+    "tz": 10,
+    "hours": [
+      8,
+      12
+    ]
+  },
+  {
+    "name": "Vapnik",
+    "expertise": "statistical learning theory, support vector machines, generalization, model complexity",
+    "rating": 4.2,
+    "rate": 35,
+    "tz": 9,
+    "hours": [
+      18,
+      22
+    ]
+  },
+  {
+    "name": "LeCun",
+    "expertise": "convolutional neural networks, computer vision, deep learning",
+    "rating": 4.4,
+    "rate": 29,
+    "tz": 0,
+    "hours": [
+      14,
+      18
+    ]
+  },
+  {
+    "name": "Bengio",
+    "expertise": "deep learning, natural language processing, representation learning",
+    "rating": 4.6,
+    "rate": 54,
+    "tz": 2,
+    "hours": [
+      12,
+      16
+    ]
+  },
+  {
+    "name": "Rumelhart",
+    "expertise": "backpropagation, neural networks, cognitive modeling, connectionism",
+    "rating": 5.0,
+    "rate": 80,
+    "tz": -8,
+    "hours": [
+      18,
+      22
+    ]
+  },
+  {
+    "name": "Pearl",
+    "expertise": "causal inference, graphical models, Bayesian networks, probabilistic reasoning",
+    "rating": 4.7,
+    "rate": 68,
+    "tz": 2,
+    "hours": [
+      20,
+      24
+    ]
+  },
+  {
+    "name": "Codd",
+    "expertise": "relational databases, SQL, query optimization, indexing",
+    "rating": 4.3,
+    "rate": 66,
+    "tz": -3,
+    "hours": [
+      8,
+      12
+    ]
+  },
+  {
+    "name": "Pearson",
+    "expertise": "correlation, regression, descriptive statistics, data analysis",
+    "rating": 4.3,
+    "rate": 35,
+    "tz": 1,
+    "hours": [
+      7,
+      11
+    ]
+  },
+  {
+    "name": "Tukey",
+    "expertise": "exploratory data analysis, statistical visualization, data cleaning",
+    "rating": 5.0,
+    "rate": 81,
+    "tz": 8,
+    "hours": [
+      12,
+      16
+    ]
+  },
+  {
+    "name": "Kimball",
+    "expertise": "data warehousing, ETL pipelines, database schema design",
+    "rating": 5.0,
+    "rate": 73,
+    "tz": -6,
+    "hours": [
+      16,
+      20
+    ]
+  },
+  {
+    "name": "Shannon",
+    "expertise": "information theory, entropy, coding theory, signal processing",
+    "rating": 4.9,
+    "rate": 80,
+    "tz": 5,
+    "hours": [
+      12,
+      16
+    ]
+  },
+  {
+    "name": "Nyquist",
+    "expertise": "signal processing, sampling theory, control systems",
+    "rating": 4.8,
+    "rate": 57,
+    "tz": 3,
+    "hours": [
+      10,
+      14
+    ]
+  },
+  {
+    "name": "Huffman",
+    "expertise": "coding theory, data compression, greedy algorithms",
+    "rating": 4.2,
+    "rate": 73,
+    "tz": -6,
+    "hours": [
+      16,
+      20
+    ]
+  },
+  {
+    "name": "Nash",
+    "expertise": "game theory, convex optimization, equilibria, linear programming",
+    "rating": 5.0,
+    "rate": 84,
+    "tz": 2,
+    "hours": [
+      7,
+      11
+    ]
+  },
+  {
+    "name": "Dantzig",
+    "expertise": "linear programming, optimization, operations research, the simplex method",
+    "rating": 4.6,
+    "rate": 56,
+    "tz": -8,
+    "hours": [
+      8,
+      12
+    ]
+  },
+  {
+    "name": "Bellman",
+    "expertise": "dynamic programming, optimal control, optimization",
+    "rating": 4.9,
+    "rate": 81,
+    "tz": 10,
+    "hours": [
+      20,
+      24
+    ]
+  },
+  {
+    "name": "Berners-Lee",
+    "expertise": "web development, HTTP, REST APIs, frontend and backend",
+    "rating": 4.3,
+    "rate": 28,
+    "tz": -5,
+    "hours": [
+      17,
+      21
+    ]
+  },
+  {
+    "name": "Fowler",
+    "expertise": "software architecture, refactoring, design patterns, object-oriented design",
+    "rating": 4.9,
+    "rate": 30,
+    "tz": 8,
+    "hours": [
+      15,
+      19
+    ]
+  },
+  {
+    "name": "Beck",
+    "expertise": "test-driven development, agile methods, software engineering, unit testing",
+    "rating": 4.8,
+    "rate": 73,
+    "tz": 2,
+    "hours": [
+      20,
+      24
+    ]
+  },
+  {
+    "name": "Newton",
+    "expertise": "classical mechanics, gravitation, calculus-based physics",
+    "rating": 4.1,
+    "rate": 67,
+    "tz": 1,
+    "hours": [
+      16,
+      20
+    ]
+  },
+  {
+    "name": "Lagrange",
+    "expertise": "analytical mechanics, dynamics, variational methods",
+    "rating": 4.2,
+    "rate": 58,
+    "tz": 10,
+    "hours": [
+      17,
+      21
+    ]
+  },
+  {
+    "name": "Galileo",
+    "expertise": "kinematics, introductory mechanics, projectile motion",
+    "rating": 4.4,
+    "rate": 38,
+    "tz": 2,
+    "hours": [
+      20,
+      24
+    ]
+  },
+  {
+    "name": "Maxwell",
+    "expertise": "electromagnetism, electrodynamics, optics",
+    "rating": 4.7,
+    "rate": 37,
+    "tz": 8,
+    "hours": [
+      12,
+      16
+    ]
+  },
+  {
+    "name": "Faraday",
+    "expertise": "electromagnetism, electric circuits, electrochemistry",
+    "rating": 4.4,
+    "rate": 67,
+    "tz": 5,
+    "hours": [
+      13,
+      17
+    ]
+  },
+  {
+    "name": "Hertz",
+    "expertise": "electromagnetic waves, radio physics, oscillations",
+    "rating": 4.4,
+    "rate": 58,
+    "tz": 1,
+    "hours": [
+      8,
+      12
+    ]
+  },
+  {
+    "name": "Bohr",
+    "expertise": "quantum mechanics, atomic physics, atomic spectra",
+    "rating": 4.2,
+    "rate": 29,
+    "tz": -3,
+    "hours": [
+      7,
+      11
+    ]
+  },
+  {
+    "name": "Heisenberg",
+    "expertise": "quantum mechanics, the uncertainty principle, matrix mechanics",
+    "rating": 4.6,
+    "rate": 39,
+    "tz": 3,
+    "hours": [
+      10,
+      14
+    ]
+  },
+  {
+    "name": "Schrodinger",
+    "expertise": "quantum mechanics, wave functions, the Schrodinger equation",
+    "rating": 4.0,
+    "rate": 70,
+    "tz": 5,
+    "hours": [
+      7,
+      11
+    ]
+  },
+  {
+    "name": "Feynman",
+    "expertise": "quantum electrodynamics, particle physics, general physics problem solving",
+    "rating": 4.2,
+    "rate": 82,
+    "tz": -8,
+    "hours": [
+      13,
+      17
+    ]
+  },
+  {
+    "name": "Carnot",
+    "expertise": "thermodynamics, heat engines, entropy",
+    "rating": 4.1,
+    "rate": 40,
+    "tz": -4,
+    "hours": [
+      18,
+      22
+    ]
+  },
+  {
+    "name": "Boltzmann",
+    "expertise": "statistical mechanics, thermodynamics, kinetic theory",
+    "rating": 4.5,
+    "rate": 59,
+    "tz": -6,
+    "hours": [
+      19,
+      23
+    ]
+  },
+  {
+    "name": "Mendeleev",
+    "expertise": "the periodic table, inorganic chemistry, general chemistry",
+    "rating": 4.9,
+    "rate": 61,
+    "tz": 3,
+    "hours": [
+      15,
+      19
+    ]
+  },
+  {
+    "name": "Lavoisier",
+    "expertise": "chemical reactions, stoichiometry, general chemistry",
+    "rating": 4.2,
+    "rate": 55,
+    "tz": 9,
+    "hours": [
+      14,
+      18
+    ]
+  },
+  {
+    "name": "Pauling",
+    "expertise": "chemical bonding, molecular structure, quantum chemistry",
+    "rating": 4.2,
+    "rate": 31,
+    "tz": 5,
+    "hours": [
+      14,
+      18
+    ]
+  },
+  {
+    "name": "Kekule",
+    "expertise": "organic chemistry, reaction mechanisms, molecular structure",
+    "rating": 4.4,
+    "rate": 51,
+    "tz": 1,
+    "hours": [
+      19,
+      23
+    ]
+  },
+  {
+    "name": "Arrhenius",
+    "expertise": "physical chemistry, reaction kinetics, acids and bases",
+    "rating": 4.1,
+    "rate": 66,
+    "tz": 5,
+    "hours": [
+      8,
+      12
+    ]
+  },
+  {
+    "name": "Darwin",
+    "expertise": "evolution, natural selection, ecology",
+    "rating": 4.1,
+    "rate": 71,
+    "tz": -3,
+    "hours": [
+      20,
+      24
+    ]
+  },
+  {
+    "name": "Mendel",
+    "expertise": "genetics, heredity, Punnett squares",
+    "rating": 4.9,
+    "rate": 40,
+    "tz": -5,
+    "hours": [
+      10,
+      14
+    ]
+  },
+  {
+    "name": "Watson",
+    "expertise": "molecular biology, DNA, genetics",
+    "rating": 4.5,
+    "rate": 33,
+    "tz": 0,
+    "hours": [
+      9,
+      13
+    ]
+  },
+  {
+    "name": "McClintock",
+    "expertise": "genetics, cytogenetics, molecular biology",
+    "rating": 4.3,
+    "rate": 40,
+    "tz": 10,
+    "hours": [
+      8,
+      12
+    ]
+  },
+  {
+    "name": "Linnaeus",
+    "expertise": "taxonomy, botany, biological classification",
+    "rating": 4.4,
+    "rate": 80,
+    "tz": 10,
+    "hours": [
+      16,
+      20
+    ]
+  },
+  {
+    "name": "Pasteur",
+    "expertise": "microbiology, immunology, cell biology",
+    "rating": 4.1,
+    "rate": 66,
+    "tz": 2,
+    "hours": [
+      7,
+      11
+    ]
+  },
+  {
+    "name": "Freud",
+    "expertise": "psychoanalysis, personality theory, clinical psychology",
+    "rating": 5.0,
+    "rate": 84,
+    "tz": 9,
+    "hours": [
+      10,
+      14
+    ]
+  },
+  {
+    "name": "Jung",
+    "expertise": "analytical psychology, personality, dream analysis",
+    "rating": 4.2,
+    "rate": 56,
+    "tz": 1,
+    "hours": [
+      10,
+      14
+    ]
+  },
+  {
+    "name": "Skinner",
+    "expertise": "behaviorism, operant conditioning, learning theory",
+    "rating": 4.9,
+    "rate": 82,
+    "tz": -8,
+    "hours": [
+      9,
+      13
+    ]
+  },
+  {
+    "name": "Pavlov",
+    "expertise": "classical conditioning, physiology, behavioral psychology",
+    "rating": 4.4,
+    "rate": 49,
+    "tz": -4,
+    "hours": [
+      20,
+      24
+    ]
+  },
+  {
+    "name": "Piaget",
+    "expertise": "developmental psychology, cognitive development, child psychology",
+    "rating": 4.8,
+    "rate": 43,
+    "tz": 0,
+    "hours": [
+      19,
+      23
+    ]
+  },
+  {
+    "name": "Smith",
+    "expertise": "microeconomics, market theory, supply and demand",
+    "rating": 5.0,
+    "rate": 75,
+    "tz": 2,
+    "hours": [
+      18,
+      22
+    ]
+  },
+  {
+    "name": "Keynes",
+    "expertise": "macroeconomics, fiscal policy, economic theory",
+    "rating": 4.7,
+    "rate": 34,
+    "tz": -5,
+    "hours": [
+      12,
+      16
+    ]
+  },
+  {
+    "name": "Friedman",
+    "expertise": "monetary economics, macroeconomics, free markets",
+    "rating": 4.2,
+    "rate": 28,
+    "tz": 3,
+    "hours": [
+      19,
+      23
+    ]
+  },
+  {
+    "name": "Ricardo",
+    "expertise": "international trade, comparative advantage, political economy",
+    "rating": 4.5,
+    "rate": 72,
+    "tz": -3,
+    "hours": [
+      7,
+      11
+    ]
+  },
+  {
+    "name": "Markowitz",
+    "expertise": "portfolio theory, risk management, finance",
+    "rating": 4.1,
+    "rate": 55,
+    "tz": 2,
+    "hours": [
+      16,
+      20
+    ]
+  },
+  {
+    "name": "Sharpe",
+    "expertise": "asset pricing, investments, financial modeling",
+    "rating": 4.2,
+    "rate": 57,
+    "tz": -7,
+    "hours": [
+      9,
+      13
+    ]
+  },
+  {
+    "name": "Chomsky",
+    "expertise": "linguistics, syntax, language acquisition",
+    "rating": 4.1,
+    "rate": 29,
+    "tz": 5,
+    "hours": [
+      10,
+      14
+    ]
+  },
+  {
+    "name": "Cervantes",
+    "expertise": "Spanish language, Spanish literature, conversation practice",
+    "rating": 4.4,
+    "rate": 85,
+    "tz": 3,
+    "hours": [
+      10,
+      14
+    ]
+  },
+  {
+    "name": "Moliere",
+    "expertise": "French language, French literature, grammar",
+    "rating": 4.6,
+    "rate": 27,
+    "tz": 3,
+    "hours": [
+      8,
+      12
+    ]
+  },
+  {
+    "name": "Goethe",
+    "expertise": "German language, German literature, composition",
+    "rating": 4.4,
+    "rate": 62,
+    "tz": 3,
+    "hours": [
+      16,
+      20
+    ]
+  },
+  {
+    "name": "Murasaki",
+    "expertise": "Japanese language, Japanese literature, writing",
+    "rating": 4.3,
+    "rate": 41,
+    "tz": -5,
+    "hours": [
+      18,
+      22
+    ]
+  },
+  {
+    "name": "Confucius",
+    "expertise": "Mandarin Chinese, Chinese language, classical Chinese texts",
+    "rating": 4.7,
+    "rate": 40,
+    "tz": -4,
+    "hours": [
+      14,
+      18
+    ]
+  },
+  {
+    "name": "Shakespeare",
+    "expertise": "English literature, drama, poetry analysis",
+    "rating": 4.1,
+    "rate": 66,
+    "tz": -4,
+    "hours": [
+      15,
+      19
+    ]
+  },
+  {
+    "name": "Austen",
+    "expertise": "literary analysis, essay writing, the novel",
+    "rating": 4.3,
+    "rate": 73,
+    "tz": -7,
+    "hours": [
+      7,
+      11
+    ]
+  },
+  {
+    "name": "Orwell",
+    "expertise": "essay writing, composition, rhetoric and argument",
+    "rating": 4.5,
+    "rate": 61,
+    "tz": -7,
+    "hours": [
+      8,
+      12
+    ]
+  },
+  {
+    "name": "Hemingway",
+    "expertise": "creative writing, fiction, prose style",
+    "rating": 4.5,
+    "rate": 57,
+    "tz": -4,
+    "hours": [
+      9,
+      13
+    ]
+  },
+  {
+    "name": "Woolf",
+    "expertise": "modernist literature, literary analysis, essay writing",
+    "rating": 4.9,
+    "rate": 81,
+    "tz": -7,
+    "hours": [
+      10,
+      14
+    ]
+  },
+  {
+    "name": "Plato",
+    "expertise": "philosophy, ethics, logic, ancient philosophy",
+    "rating": 4.4,
+    "rate": 35,
+    "tz": 1,
+    "hours": [
+      16,
+      20
+    ]
+  },
+  {
+    "name": "Kant",
+    "expertise": "ethics, metaphysics, epistemology",
+    "rating": 4.7,
+    "rate": 64,
+    "tz": 9,
+    "hours": [
+      18,
+      22
+    ]
+  },
+  {
+    "name": "Hume",
+    "expertise": "empiricism, epistemology, philosophy of mind",
+    "rating": 4.5,
+    "rate": 67,
+    "tz": 10,
+    "hours": [
+      16,
+      20
+    ]
+  },
+  {
+    "name": "Aristotle",
+    "expertise": "logic, ethics, rhetoric, ancient philosophy",
+    "rating": 4.3,
+    "rate": 67,
+    "tz": -7,
+    "hours": [
+      9,
+      13
+    ]
+  },
+  {
+    "name": "Herodotus",
+    "expertise": "ancient history, historiography, world history",
+    "rating": 4.3,
+    "rate": 81,
+    "tz": -7,
+    "hours": [
+      19,
+      23
+    ]
+  },
+  {
+    "name": "Gibbon",
+    "expertise": "Roman history, European history, historical writing",
+    "rating": 4.6,
+    "rate": 42,
+    "tz": -4,
+    "hours": [
+      17,
+      21
+    ]
+  },
+  {
+    "name": "Thucydides",
+    "expertise": "ancient history, political history, primary sources",
+    "rating": 4.2,
+    "rate": 46,
+    "tz": -5,
+    "hours": [
+      18,
+      22
+    ]
+  },
+  {
+    "name": "Tocqueville",
+    "expertise": "political history, democracy, American history",
+    "rating": 4.6,
+    "rate": 41,
+    "tz": 2,
+    "hours": [
+      15,
+      19
+    ]
+  },
+  {
+    "name": "Bach",
+    "expertise": "music theory, composition, counterpoint",
+    "rating": 4.3,
+    "rate": 83,
+    "tz": 10,
+    "hours": [
+      7,
+      11
+    ]
+  },
+  {
+    "name": "Mozart",
+    "expertise": "music theory, composition, classical music analysis",
+    "rating": 4.1,
+    "rate": 52,
+    "tz": 10,
+    "hours": [
+      12,
+      16
+    ]
+  },
+  {
+    "name": "Beethoven",
+    "expertise": "music theory, harmony, ear training",
+    "rating": 4.0,
+    "rate": 46,
+    "tz": 9,
+    "hours": [
+      9,
+      13
+    ]
+  },
+  {
+    "name": "DaVinci",
+    "expertise": "drawing, painting, art fundamentals",
+    "rating": 4.6,
+    "rate": 41,
+    "tz": -6,
+    "hours": [
+      19,
+      23
+    ]
+  },
+  {
+    "name": "VanGogh",
+    "expertise": "painting, color theory, art techniques",
+    "rating": 4.4,
+    "rate": 70,
+    "tz": 0,
+    "hours": [
+      16,
+      20
+    ]
+  },
+  {
+    "name": "Tesla",
+    "expertise": "electrical engineering, circuits, power systems",
+    "rating": 4.0,
+    "rate": 29,
+    "tz": 8,
+    "hours": [
+      9,
+      13
+    ]
+  },
+  {
+    "name": "Edison",
+    "expertise": "electrical engineering, electronics, applied physics",
+    "rating": 4.5,
+    "rate": 78,
+    "tz": -3,
+    "hours": [
+      17,
+      21
+    ]
+  },
+  {
+    "name": "Bernoulli",
+    "expertise": "fluid mechanics, mechanical engineering, thermodynamics",
+    "rating": 4.6,
+    "rate": 52,
+    "tz": -6,
+    "hours": [
+      7,
+      11
+    ]
+  },
+  {
+    "name": "Brunel",
+    "expertise": "civil engineering, structural engineering, statics",
+    "rating": 4.3,
+    "rate": 82,
+    "tz": 9,
+    "hours": [
+      7,
+      11
+    ]
+  }
+]

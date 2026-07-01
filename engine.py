@@ -1,33 +1,15 @@
 # engine.py — the matching logic, importable by both the CLI and the web app.
+import json
 from sentence_transformers import SentenceTransformer, util
 from intake import rewrite_query
 
 MODEL_NAME = "all-mpnet-base-v2"
 model = SentenceTransformer(MODEL_NAME)
 
-# Tutor catalog: name, expertise, rating (out of 5), hourly rate (USD).
-tutors = [
-    {"name": "Ada",         "expertise": "probability theory, measure theory, stochastic processes, random variables", "rating": 4.9, "rate": 35},
-    {"name": "Bayes",       "expertise": "Bayesian statistics, statistical inference, MCMC sampling, probabilistic modeling", "rating": 4.4, "rate": 60},
-    {"name": "Markov",      "expertise": "stochastic processes, Markov chains, queueing theory, random walks", "rating": 4.6, "rate": 42},
-    {"name": "Grace",       "expertise": "real analysis, calculus, limits, continuity, sequences and series", "rating": 4.7, "rate": 30},
-    {"name": "Euler",       "expertise": "differential equations, dynamical systems, mathematical physics", "rating": 4.5, "rate": 40},
-    {"name": "Fourier",     "expertise": "Fourier analysis, partial differential equations, signal processing, harmonic analysis", "rating": 4.6, "rate": 46},
-    {"name": "Noether",     "expertise": "abstract algebra, group theory, rings and fields, Galois theory", "rating": 4.8, "rate": 45},
-    {"name": "Turing",      "expertise": "theory of computation, complexity classes, automata, computability", "rating": 4.6, "rate": 50},
-    {"name": "Dijkstra",    "expertise": "algorithms, graph theory, shortest paths, data structures", "rating": 4.9, "rate": 55},
-    {"name": "Knuth",       "expertise": "combinatorics, discrete mathematics, analysis of algorithms", "rating": 5.0, "rate": 70},
-    {"name": "Hopper",      "expertise": "compilers, programming language design, parsers, type systems", "rating": 4.3, "rate": 48},
-    {"name": "Linus",       "expertise": "operating systems, C programming, concurrency, multithreading", "rating": 4.2, "rate": 38},
-    {"name": "Lamport",     "expertise": "distributed systems, consensus algorithms, logical clocks, fault tolerance", "rating": 4.7, "rate": 58},
-    {"name": "Hinton",      "expertise": "deep learning, neural networks, backpropagation, training and optimization", "rating": 4.7, "rate": 65},
-    {"name": "Vapnik",      "expertise": "statistical learning theory, support vector machines, generalization, model complexity", "rating": 4.5, "rate": 60},
-    {"name": "Pearl",       "expertise": "causal inference, graphical models, Bayesian networks, probabilistic reasoning", "rating": 4.8, "rate": 62},
-    {"name": "Shannon",     "expertise": "information theory, entropy, coding theory, signal processing", "rating": 4.6, "rate": 52},
-    {"name": "Codd",        "expertise": "relational databases, SQL, query optimization, indexing", "rating": 4.4, "rate": 44},
-    {"name": "Nash",        "expertise": "game theory, convex optimization, equilibria, linear programming", "rating": 4.7, "rate": 50},
-    {"name": "Berners-Lee", "expertise": "web development, HTTP, REST APIs, frontend and backend", "rating": 4.3, "rate": 40},
-]
+# Load the tutor catalog from a data file — data lives separately from logic,
+# so the catalog can grow (or move to a database) without touching this code.
+with open("tutors.json", "r", encoding="utf-8") as f:
+    tutors = json.load(f)
 
 # Embed every tutor's expertise once, when this module is first imported.
 tutor_embeddings = model.encode([t["expertise"] for t in tutors])
