@@ -1,3 +1,13 @@
+---
+title: TutorMatch
+emoji: 🎓
+colorFrom: blue
+colorTo: indigo
+sdk: docker
+app_port: 7860
+pinned: false
+---
+
 # Tutor Matching Algorithm
 
 **The blueprint for a matching algorithm that matches students with specific subject needs to tutors who specialize in those requests.**
