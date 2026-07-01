@@ -2,58 +2,186 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>TutorMatch</title>
   <style>
-    body { font-family: system-ui, sans-serif; max-width: 640px; margin: 60px auto; padding: 0 20px; }
-    h1 { margin-bottom: 4px; }
-    p.sub { color: #666; margin-top: 0; }
-    .searchbar { display: flex; gap: 8px; margin: 24px 0; }
-    input { flex: 1; padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 6px; }
-    button { padding: 10px 18px; font-size: 16px; border: 0; border-radius: 6px; background: #2563eb; color: #fff; cursor: pointer; }
-    button:disabled { background: #aaa; }
-    .card { border: 1px solid #eee; border-radius: 8px; padding: 14px 16px; margin: 10px 0; }
-    .card h3 { margin: 0 0 4px; }
-    .meta { color: #666; font-size: 14px; }
-    .rewritten { color: #888; font-size: 13px; font-style: italic; margin: 8px 0 16px; }
+    * { box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+      background: #f6f7f9; color: #1a1a2e; margin: 0; padding: 48px 20px 80px;
+    }
+    .wrap { max-width: 660px; margin: 0 auto; }
+
+    .logo { font-size: 28px; font-weight: 700; letter-spacing: -0.02em; }
+    .logo span { color: #4f46e5; }
+    .tagline { color: #6b7280; margin: 6px 0 26px; font-size: 15px; }
+
+    .searchbar { display: flex; gap: 10px; }
+    #q {
+      flex: 1; padding: 13px 16px; font-size: 16px; background: #fff;
+      border: 1px solid #d7dae0; border-radius: 10px; outline: none;
+      transition: border-color .15s, box-shadow .15s;
+    }
+    #q:focus { border-color: #4f46e5; box-shadow: 0 0 0 3px rgba(79,70,229,.15); }
+    #go {
+      padding: 0 22px; font-size: 15px; font-weight: 600; color: #fff; cursor: pointer;
+      border: 0; border-radius: 10px; background: #4f46e5; transition: background .15s;
+    }
+    #go:hover { background: #4338ca; }
+    #go:disabled { background: #a5a8b3; cursor: default; }
+
+    .examples { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 14px; }
+    .examples > span { color: #9ca3af; font-size: 13px; }
+    .chip {
+      font-size: 13px; color: #4b5563; background: #fff; border: 1px solid #e2e4e9;
+      padding: 6px 12px; border-radius: 20px; cursor: pointer; transition: all .15s;
+    }
+    .chip:hover { border-color: #4f46e5; color: #4f46e5; }
+
+    .status { display: flex; align-items: center; gap: 12px; color: #6b7280; padding: 30px 4px; }
+    .spinner {
+      width: 20px; height: 20px; border: 3px solid #e3e5ea; border-top-color: #4f46e5;
+      border-radius: 50%; animation: spin .7s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .error {
+      background: #fef2f2; border: 1px solid #fecaca; color: #b91c1c;
+      padding: 14px 16px; border-radius: 10px; margin-top: 22px; font-size: 15px;
+    }
+
+    .rewrite {
+      background: #eef2ff; border: 1px solid #e0e7ff; border-radius: 10px;
+      padding: 12px 14px; margin: 24px 0 10px; font-size: 14px; color: #4338ca; line-height: 1.5;
+    }
+    .rewrite-label {
+      display: inline-block; font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .05em; color: #6366f1; margin-right: 8px;
+    }
+    .subhint { color: #9ca3af; font-size: 13px; margin: 2px 2px 14px; }
+
+    .card {
+      display: flex; gap: 14px; background: #fff; border: 1px solid #e8eaee;
+      border-radius: 12px; padding: 16px; margin-bottom: 12px;
+      box-shadow: 0 1px 2px rgba(16,24,40,.04); transition: box-shadow .15s, transform .15s;
+    }
+    .card:hover { box-shadow: 0 4px 14px rgba(16,24,40,.08); transform: translateY(-1px); }
+    .rank {
+      flex: none; width: 30px; height: 30px; border-radius: 8px; background: #eef2ff;
+      color: #4f46e5; font-weight: 700; font-size: 14px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .card-body { flex: 1; min-width: 0; }
+    .card-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+    .card-head h3 { margin: 0; font-size: 17px; }
+    .pills { display: flex; gap: 6px; flex: none; }
+    .pill {
+      font-size: 12px; color: #4b5563; background: #f3f4f6;
+      padding: 3px 8px; border-radius: 20px; white-space: nowrap;
+    }
+    .expertise { color: #6b7280; font-size: 14px; margin: 5px 0 12px; line-height: 1.45; }
+    .match { display: flex; align-items: center; gap: 10px; }
+    .match-track { flex: 1; height: 6px; background: #edeef2; border-radius: 999px; overflow: hidden; }
+    .match-fill { height: 100%; background: #4f46e5; border-radius: 999px; transition: width .4s ease; }
+    .match-label { font-size: 12px; color: #6b7280; white-space: nowrap; }
   </style>
 </head>
 <body>
-  <h1>TutorMatch</h1>
-  <p class="sub">Describe what you need help with — in plain words.</p>
+  <div class="wrap">
+    <div class="logo">Tutor<span>Match</span></div>
+    <p class="tagline">Describe what you're stuck on — in plain words — and get matched to a specialist.</p>
 
-  <div class="searchbar">
-    <input id="q" placeholder="e.g. why won't my neural network converge?" />
-    <button id="go" onclick="runSearch()">Search</button>
+    <div class="searchbar">
+      <input id="q" placeholder="e.g. why won't my neural network converge?" autocomplete="off" />
+      <button id="go" onclick="runSearch()">Search</button>
+    </div>
+
+    <div class="examples">
+      <span>Try:</span>
+      <button class="chip" onclick="example('make my code faster as the input grows')">make my code faster</button>
+      <button class="chip" onclick="example('proving a sequence converges')">proving convergence</button>
+      <button class="chip" onclick="example('what is a quotient group')">quotient groups</button>
+    </div>
+
+    <div id="results"></div>
   </div>
 
-  <div id="results"></div>
-
   <script>
+    const input = document.getElementById("q");
+    const button = document.getElementById("go");
+    const resultsDiv = document.getElementById("results");
+
+    // Let the Enter key trigger a search, not just the button.
+    input.addEventListener("keydown", (e) => { if (e.key === "Enter") runSearch(); });
+
+    function example(text) {
+      input.value = text;
+      runSearch();
+    }
+
     async function runSearch() {
-      const query = document.getElementById("q").value;
-      const button = document.getElementById("go");
-      const resultsDiv = document.getElementById("results");
+      const query = input.value.trim();
       if (!query) return;
 
       button.disabled = true;
-      resultsDiv.innerHTML = "<p>Searching…</p>";
+      resultsDiv.innerHTML = `<div class="status"><div class="spinner"></div><span>Finding tutors…</span></div>`;
 
-      // Call your backend endpoint.
-      const response = await fetch("/search?q=" + encodeURIComponent(query));
-      const data = await response.json();
+      try {
+        const response = await fetch("/search?q=" + encodeURIComponent(query));
 
-      // Build the results HTML.
-      let html = '<p class="rewritten">Interpreted as: ' + data.rewritten + '</p>';
-      for (const t of data.results) {
-        html +=
-          '<div class="card">' +
-            '<h3>' + t.name + '</h3>' +
-            '<div class="meta">' + t.expertise + '</div>' +
-            '<div class="meta">match ' + t.score + ' · ⭐ ' + t.rating + ' · $' + t.rate + '/hr</div>' +
-          '</div>';
+        // The server answered, but with an error status (e.g. our friendly 502).
+        if (!response.ok) {
+          let message = "Something went wrong. Please try again.";
+          try { const err = await response.json(); if (err.error) message = err.error; } catch (_) {}
+          resultsDiv.innerHTML = `<div class="error">${message}</div>`;
+          return;
+        }
+
+        const data = await response.json();
+        renderResults(data);
+      } catch (e) {
+        // Couldn't reach the server at all (network down, server not running).
+        resultsDiv.innerHTML = `<div class="error">Couldn't reach the server. Check your connection and try again.</div>`;
+      } finally {
+        button.disabled = false;
       }
-      resultsDiv.innerHTML = html;
-      button.disabled = false;
+    }
+
+    function renderResults(data) {
+      if (!data.results || data.results.length === 0) {
+        resultsDiv.innerHTML = `<div class="error">No tutors found for that request.</div>`;
+        return;
+      }
+
+      const rewrite = `
+        <div class="rewrite">
+          <span class="rewrite-label">Interpreted as</span>${data.rewritten}
+        </div>
+        <div class="subhint">Ranked by topic match, rating, and price.</div>`;
+
+      const cards = data.results.map((t, i) => {
+        const matchPct = Math.round(t.meaning * 100);
+        return `
+          <div class="card">
+            <div class="rank">${i + 1}</div>
+            <div class="card-body">
+              <div class="card-head">
+                <h3>${t.name}</h3>
+                <div class="pills">
+                  <span class="pill">★ ${t.rating}</span>
+                  <span class="pill">$${t.rate}/hr</span>
+                </div>
+              </div>
+              <p class="expertise">${t.expertise}</p>
+              <div class="match">
+                <div class="match-track"><div class="match-fill" style="width:${matchPct}%"></div></div>
+                <span class="match-label">${matchPct}% topic match</span>
+              </div>
+            </div>
+          </div>`;
+      }).join("");
+
+      resultsDiv.innerHTML = rewrite + cards;
     }
   </script>
 </body>
