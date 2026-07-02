@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>My profile · TutorMatch</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+           background: #f6f7f9; color: #1a1a2e; margin: 0; padding: 40px 20px 80px; }
+    .wrap { max-width: 620px; margin: 0 auto; }
+    .top { display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-size: 24px; font-weight: 700; letter-spacing: -0.02em; text-decoration: none; color: inherit; }
+    .logo span { color: #4f46e5; }
+    .top a.nav, .top button.nav { font-size: 13px; color: #4b5563; text-decoration: none; background: #fff;
+        border: 1px solid #e2e4e9; border-radius: 8px; padding: 7px 12px; cursor: pointer; }
+    .top .navrow { display: flex; gap: 8px; }
+    h1 { font-size: 22px; margin: 26px 0 2px; }
+    .sub { color: #6b7280; font-size: 14px; margin: 0 0 20px; }
+    .card { background: #fff; border: 1px solid #e8eaee; border-radius: 14px; padding: 22px; box-shadow: 0 1px 2px rgba(16,24,40,.04); }
+    label { display: block; font-size: 13px; color: #374151; margin: 16px 0 5px; font-weight: 600; }
+    label:first-child { margin-top: 0; }
+    .hint { font-weight: 400; color: #9ca3af; font-size: 12px; }
+    .req { font-weight: 400; color: #dc2626; font-size: 12px; }
+    input, textarea, select { width: 100%; padding: 11px 13px; font-size: 14px; background: #fff;
+        border: 1px solid #d7dae0; border-radius: 10px; outline: none; transition: border-color .15s, box-shadow .15s; font-family: inherit; }
+    input:focus, textarea:focus, select:focus { border-color: #4f46e5; box-shadow: 0 0 0 3px rgba(79,70,229,.15); }
+    textarea { resize: vertical; min-height: 66px; }
+    .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+    .roleseg { display: flex; gap: 8px; }
+    .roleseg label { flex: 1; margin: 0; text-align: center; }
+    .roleseg input { display: none; }
+    .roleseg span { display: block; padding: 9px; border: 1px solid #e2e4e9; border-radius: 9px; cursor: pointer; font-size: 14px; color: #4b5563; }
+    .roleseg input:checked + span { border-color: #4f46e5; background: #eef2ff; color: #4f46e5; font-weight: 600; }
+    .tutor-only, .student-only { display: none; }
+    .section-note { font-size: 12px; color: #9ca3af; margin: 22px 0 -6px; text-transform: uppercase; letter-spacing: .05em; font-weight: 700; }
+    button.save { margin-top: 24px; padding: 12px 20px; font-size: 15px; font-weight: 600; color: #fff;
+        cursor: pointer; border: 0; border-radius: 10px; background: #4f46e5; }
+    button.save:hover { background: #4338ca; }
+    button.save:disabled { background: #a5a8b3; }
+    .flash { margin-top: 14px; font-size: 14px; padding: 10px 13px; border-radius: 9px; display: none; }
+    .flash.ok { background: #dcfce7; border: 1px solid #bbf7d0; color: #15803d; }
+    .flash.err { background: #fef2f2; border: 1px solid #fecaca; color: #b91c1c; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="top">
+      <a class="logo" href="/">Tutor<span>Match</span></a>
+      <div class="navrow">
+        <a class="nav" id="viewPublic" href="#">View public profile</a>
+        <button class="nav" onclick="logout()">Log out</button>
+      </div>
+    </div>
+
+    <h1>Your profile</h1>
+    <p class="sub" id="emailLine"></p>
+
+    <div class="card">
+      <label>Name</label>
+      <input id="name" type="text" />
+
+      <label>Account type</label>
+      <div class="roleseg">
+        <label><input type="radio" name="role" value="student"><span>Student</span></label>
+        <label><input type="radio" name="role" value="tutor"><span>Tutor</span></label>
+        <label><input type="radio" name="role" value="hybrid"><span>Hybrid</span></label>
+      </div>
+
+      <label>Bio <span class="hint">shown on your public profile</span></label>
+      <textarea id="bio" placeholder="A sentence or two about you."></textarea>
+
+      <label>Education <span class="hint">optional</span></label>
+      <input id="education" type="text" placeholder="e.g. PhD in Statistics, Stanford" />
+
+      <label>Languages <span class="hint">comma-separated</span></label>
+      <input id="languages" type="text" placeholder="English, Spanish" />
+
+      <!-- Student / hybrid -->
+      <div class="student-only">
+        <label>Currently learning <span class="req">· required</span> <span class="hint">comma-separated topics</span></label>
+        <input id="learning" type="text" placeholder="linear algebra, intro to Python" />
+      </div>
+
+      <!-- Tutor / hybrid -->
+      <div class="tutor-only">
+        <p class="section-note">Tutoring details</p>
+        <label>Subject specialties <span class="req">· required</span> <span class="hint">comma-separated — this is what students get matched to</span></label>
+        <input id="specialties" type="text" placeholder="probability theory, measure theory, stochastic processes" />
+        <div class="grid3">
+          <div><label>Rate ($/hr) <span class="req">·</span></label><input id="rate" type="number" min="0" placeholder="40" /></div>
+          <div><label>Timezone <span class="req">·</span> <span class="hint">UTC offset</span></label><input id="tz" type="number" min="-12" max="14" placeholder="-8" /></div>
+          <div></div>
+        </div>
+        <div class="grid3">
+          <div><label>Available from</label><select id="avail_start"></select></div>
+          <div><label>Available to</label><select id="avail_end"></select></div>
+          <div></div>
+        </div>
+      </div>
+
+      <button class="save" id="saveBtn" onclick="save()">Save changes</button>
+      <div class="flash" id="flash"></div>
+    </div>
+  </div>
+
+  <script>
+    let me = null;
+
+    function label12(h) { const s = h < 12 ? "AM" : "PM"; let hr = h % 12; if (hr === 0) hr = 12; return `${hr}:00 ${s}`; }
+    (function fillHours() {
+      for (const id of ["avail_start", "avail_end"]) {
+        const sel = document.getElementById(id);
+        for (let h = 0; h < 24; h++) sel.add(new Option(label12(h), h));
+      }
+    })();
+
+    function applyRoleVisibility() {
+      const role = document.querySelector('input[name=role]:checked').value;
+      document.querySelector(".student-only").style.display = (role === "student" || role === "hybrid") ? "block" : "none";
+      document.querySelector(".tutor-only").style.display = (role === "tutor" || role === "hybrid") ? "block" : "none";
+    }
+    document.querySelectorAll('input[name=role]').forEach(r => r.addEventListener("change", applyRoleVisibility));
+
+    async function load() {
+      const res = await fetch("/api/me");
+      if (res.status === 401) { window.location = "/login"; return; }
+      me = await res.json();
+      document.getElementById("emailLine").textContent = me.email || "";
+      document.getElementById("viewPublic").href = "/u/" + me.id;
+      document.getElementById("name").value = me.name || "";
+      document.getElementById("bio").value = me.bio || "";
+      document.getElementById("education").value = me.education || "";
+      document.getElementById("languages").value = me.languages || "";
+      document.getElementById("learning").value = me.learning || "";
+      document.getElementById("specialties").value = me.specialties || "";
+      if (me.rate != null) document.getElementById("rate").value = me.rate;
+      if (me.tz != null) document.getElementById("tz").value = me.tz;
+      if (me.avail_start != null) document.getElementById("avail_start").value = me.avail_start;
+      if (me.avail_end != null) document.getElementById("avail_end").value = me.avail_end;
+      const roleInput = document.querySelector(`input[name=role][value="${me.role}"]`);
+      if (roleInput) roleInput.checked = true;
+      applyRoleVisibility();
+    }
+
+    function flash(msg, ok) {
+      const f = document.getElementById("flash");
+      f.textContent = msg; f.className = "flash " + (ok ? "ok" : "err"); f.style.display = "block";
+    }
+
+    function numOrNull(id) { const v = document.getElementById(id).value; return v === "" ? null : Number(v); }
+
+    async function save() {
+      const role = document.querySelector('input[name=role]:checked').value;
+      const payload = {
+        name: document.getElementById("name").value.trim(),
+        role,
+        bio: document.getElementById("bio").value.trim(),
+        education: document.getElementById("education").value.trim(),
+        languages: document.getElementById("languages").value.trim(),
+      };
+      if (role === "student" || role === "hybrid") payload.learning = document.getElementById("learning").value.trim();
+      if (role === "tutor" || role === "hybrid") {
+        payload.specialties = document.getElementById("specialties").value.trim();
+        payload.rate = numOrNull("rate");
+        payload.tz = numOrNull("tz");
+        payload.avail_start = numOrNull("avail_start");
+        payload.avail_end = numOrNull("avail_end");
+      }
+
+      // Client-side required checks (mirrors the server) for instant feedback.
+      const missing = [];
+      if (role === "tutor" || role === "hybrid") {
+        if (!payload.specialties) missing.push("subject specialties");
+        if (payload.rate == null) missing.push("rate");
+        if (payload.tz == null) missing.push("timezone");
+      }
+      if (role === "student" || role === "hybrid") {
+        if (!payload.learning) missing.push("currently learning");
+      }
+      if (missing.length) { flash("Please fill in: " + missing.join(", ") + ".", false); return; }
+      const btn = document.getElementById("saveBtn");
+      btn.disabled = true;
+      try {
+        const res = await fetch("/api/profile", {
+          method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload),
+        });
+        const data = await res.json().catch(() => ({}));
+        if (res.ok) flash("Saved.", true);
+        else flash(data.error || "Couldn't save.", false);
+      } catch (_) { flash("Couldn't reach the server.", false); }
+      finally { btn.disabled = false; }
+    }
+
+    async function logout() { await fetch("/api/logout", { method: "POST" }); window.location = "/"; }
+    load();
+  </script>
+</body>
+</html>

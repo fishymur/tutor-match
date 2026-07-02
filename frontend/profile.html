@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Profile · TutorMatch</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+           background: #f6f7f9; color: #1a1a2e; margin: 0; padding: 40px 20px 80px; }
+    .wrap { max-width: 620px; margin: 0 auto; }
+    .logo { font-size: 24px; font-weight: 700; letter-spacing: -0.02em; text-decoration: none; color: inherit; }
+    .logo span { color: #4f46e5; }
+    .card { background: #fff; border: 1px solid #e8eaee; border-radius: 14px; padding: 26px;
+            box-shadow: 0 1px 2px rgba(16,24,40,.04); margin-top: 24px; }
+    .head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+    h1 { font-size: 24px; margin: 0; }
+    .badges { display: flex; gap: 6px; }
+    .role-badge { font-size: 12px; font-weight: 600; padding: 4px 11px; border-radius: 20px; text-transform: capitalize; }
+    .role-student { background: #eef2ff; color: #4f46e5; }
+    .role-tutor { background: #dcfce7; color: #15803d; }
+    .role-hybrid { background: #fef3c7; color: #b45309; }
+    .bio { color: #4b5563; font-size: 15px; line-height: 1.55; margin: 14px 0 4px; }
+    .meta { color: #6b7280; font-size: 13.5px; margin-top: 10px; }
+    .meta b { color: #374151; font-weight: 600; }
+    .block { margin-top: 22px; }
+    .block h2 { font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: #9ca3af; margin: 0 0 9px; }
+    .pills { display: flex; flex-wrap: wrap; gap: 7px; }
+    .pill { font-size: 13px; color: #4b5563; background: #f3f4f6; padding: 5px 11px; border-radius: 20px; }
+    .pill-learn { background: #eef2ff; color: #4338ca; }
+    .stat { display: inline-block; font-size: 14px; color: #374151; margin-right: 18px; }
+    .stat b { font-size: 17px; }
+    .muted { color: #9ca3af; }
+    .error { background: #fef2f2; border: 1px solid #fecaca; color: #b91c1c; padding: 14px 16px; border-radius: 10px; margin-top: 24px; }
+    .back { display: inline-block; margin-top: 20px; font-size: 14px; color: #4f46e5; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <a class="logo" href="/">Tutor<span>Match</span></a>
+    <div id="content"></div>
+    <a class="back" href="/">← Back to search</a>
+  </div>
+
+  <script>
+    const uid = location.pathname.split("/").filter(Boolean).pop();
+
+    function h12(h) { const s = h < 12 ? "AM" : "PM"; let hr = h % 12; if (hr === 0) hr = 12; return `${hr}:00 ${s}`; }
+    function esc(s) { return (s || "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c])); }
+    function pills(csv, cls) {
+      const items = (csv || "").split(",").map(s => s.trim()).filter(Boolean);
+      if (!items.length) return "";
+      return `<div class="pills">${items.map(i => `<span class="pill ${cls || ""}">${esc(i)}</span>`).join("")}</div>`;
+    }
+
+    async function load() {
+      const res = await fetch("/api/user/" + uid);
+      const box = document.getElementById("content");
+      if (!res.ok) { box.innerHTML = `<div class="error">This profile couldn't be found.</div>`; return; }
+      const u = await res.json();
+      const isTutor = u.role === "tutor" || u.role === "hybrid";
+      const isStudent = u.role === "student" || u.role === "hybrid";
+
+      const metaBits = [];
+      if (u.education) metaBits.push(`<div class="meta"><b>Education:</b> ${esc(u.education)}</div>`);
+      if (u.languages) metaBits.push(`<div class="meta"><b>Languages:</b> ${esc(u.languages)}</div>`);
+
+      let tutorBlock = "";
+      if (isTutor) {
+        const stats = [];
+        if (u.rate != null) stats.push(`<span class="stat"><b>$${u.rate}</b>/hr</span>`);
+        stats.push(u.rating != null
+          ? `<span class="stat"><b>${u.rating}</b>★</span>`
+          : `<span class="stat muted">New — not yet rated</span>`);
+        if (u.avail_start != null && u.avail_end != null) {
+          const tzLabel = u.tz != null ? ` (UTC${u.tz >= 0 ? "+" : ""}${u.tz})` : "";
+          stats.push(`<span class="stat">${h12(u.avail_start)}–${h12(u.avail_end)}${tzLabel}</span>`);
+        }
+        tutorBlock = `
+          <div class="block"><h2>Teaches</h2>${pills(u.specialties) || '<span class="muted">No specialties listed yet.</span>'}</div>
+          <div class="block">${stats.join("")}</div>`;
+      }
+
+      const learnBlock = (isStudent && u.learning)
+        ? `<div class="block"><h2>Currently learning</h2>${pills(u.learning, "pill-learn")}</div>` : "";
+
+      box.innerHTML = `
+        <div class="card">
+          <div class="head">
+            <h1>${esc(u.name)}</h1>
+            <div class="badges"><span class="role-badge role-${u.role}">${esc(u.role)}</span></div>
+          </div>
+          ${u.bio ? `<p class="bio">${esc(u.bio)}</p>` : ""}
+          ${metaBits.join("")}
+          ${tutorBlock}
+          ${learnBlock}
+        </div>`;
+    }
+    load();
+  </script>
+</body>
+</html>

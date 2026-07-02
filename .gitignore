@@ -2,3 +2,8 @@ __pycache__/
 *.pyc
 .env
 .DS_Store
+.venv/
+venv/
+tutormatch.db
+*.db
+bench.txt

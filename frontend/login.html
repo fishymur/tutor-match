@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Log in · TutorMatch</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+           background: #f6f7f9; color: #1a1a2e; margin: 0; padding: 48px 20px 80px; }
+    .wrap { max-width: 420px; margin: 0 auto; }
+    .logo { font-size: 26px; font-weight: 700; letter-spacing: -0.02em; text-decoration: none; color: inherit; }
+    .logo span { color: #4f46e5; }
+    h1 { font-size: 22px; margin: 26px 0 22px; }
+    label { display: block; font-size: 13px; color: #374151; margin: 14px 0 5px; font-weight: 600; }
+    input { width: 100%; padding: 12px 14px; font-size: 15px; background: #fff;
+            border: 1px solid #d7dae0; border-radius: 10px; outline: none; transition: border-color .15s, box-shadow .15s; }
+    input:focus { border-color: #4f46e5; box-shadow: 0 0 0 3px rgba(79,70,229,.15); }
+    button { width: 100%; margin-top: 22px; padding: 13px; font-size: 15px; font-weight: 600; color: #fff;
+             cursor: pointer; border: 0; border-radius: 10px; background: #4f46e5; transition: background .15s; }
+    button:hover { background: #4338ca; }
+    button:disabled { background: #a5a8b3; cursor: default; }
+    .alt { text-align: center; margin-top: 18px; font-size: 14px; color: #6b7280; }
+    .alt a { color: #4f46e5; text-decoration: none; }
+    .error { background: #fef2f2; border: 1px solid #fecaca; color: #b91c1c;
+             padding: 11px 14px; border-radius: 10px; margin-top: 18px; font-size: 14px; display: none; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <a class="logo" href="/">Tutor<span>Match</span></a>
+    <h1>Welcome back</h1>
+    <div id="error" class="error"></div>
+
+    <label for="email">Email</label>
+    <input id="email" type="email" autocomplete="email" placeholder="you@example.com" />
+    <label for="password">Password</label>
+    <input id="password" type="password" autocomplete="current-password" placeholder="Your password" />
+
+    <button id="go" onclick="submit()">Log in</button>
+    <p class="alt">New here? <a href="/signup">Create an account</a></p>
+  </div>
+
+  <script>
+    const errBox = document.getElementById("error");
+    document.addEventListener("keydown", e => { if (e.key === "Enter") submit(); });
+    async function submit() {
+      errBox.style.display = "none";
+      const btn = document.getElementById("go");
+      btn.disabled = true;
+      try {
+        const res = await fetch("/api/login", {
+          method: "POST", headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email: document.getElementById("email").value.trim(),
+            password: document.getElementById("password").value,
+          }),
+        });
+        if (res.ok) { window.location = "/me"; return; }
+        const data = await res.json().catch(() => ({}));
+        errBox.textContent = data.error || "Something went wrong.";
+        errBox.style.display = "block";
+      } catch (_) {
+        errBox.textContent = "Couldn't reach the server.";
+        errBox.style.display = "block";
+      } finally { btn.disabled = false; }
+    }
+  </script>
+</body>
+</html>

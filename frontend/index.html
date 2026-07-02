@@ -11,6 +11,15 @@
     .wrap { max-width: 660px; margin: 0 auto; }
     .logo { font-size: 28px; font-weight: 700; letter-spacing: -0.02em; }
     .logo span { color: #4f46e5; }
+    .topnav { display: flex; align-items: center; justify-content: flex-end; gap: 8px; margin-bottom: 2px; min-height: 30px; }
+    .topnav a, .topnav button { font-size: 13px; color: #4b5563; text-decoration: none; background: #fff;
+        border: 1px solid #e2e4e9; border-radius: 8px; padding: 7px 12px; cursor: pointer; font-family: inherit; }
+    .topnav a:hover, .topnav button:hover { border-color: #4f46e5; color: #4f46e5; }
+    .topnav a.primary { background: #4f46e5; color: #fff; border-color: #4f46e5; }
+    .topnav a.primary:hover { background: #4338ca; color: #fff; }
+    .topnav .who { color: #9ca3af; margin-right: 4px; font-size: 13px; }
+    .card-head h3 a { color: inherit; text-decoration: none; }
+    .card-head h3 a:hover { color: #4f46e5; text-decoration: underline; }
     .tagline { color: #6b7280; margin: 6px 0 26px; font-size: 15px; }
     .searchbar { display: flex; gap: 10px; }
     #q { flex: 1; padding: 13px 16px; font-size: 16px; background: #fff; border: 1px solid #d7dae0;
@@ -97,6 +106,7 @@
 </head>
 <body>
   <div class="wrap">
+    <div class="topnav" id="topnav"></div>
     <div class="logo">Tutor<span>Match</span></div>
     <p class="tagline">Describe what you're stuck on — in plain words — and get matched to a specialist.</p>
 
@@ -133,9 +143,9 @@
           <div class="field">
             <label>Price ($/hr)</label>
             <div class="row">
-              <input type="number" id="minPrice" placeholder="min" min="0" oninput="runSearchIfReady()" />
+              <input type="number" id="minPrice" placeholder="min" min="0" oninput="runSearchDebounced()" />
               <span>to</span>
-              <input type="number" id="maxPrice" placeholder="max" min="0" oninput="runSearchIfReady()" />
+              <input type="number" id="maxPrice" placeholder="max" min="0" oninput="runSearchDebounced()" />
             </div>
           </div>
           <div class="field">
@@ -148,11 +158,11 @@
           </div>
           <div class="field">
             <label>Min rating: <b id="minRatingVal">any</b></label>
-            <input type="range" id="minRating" min="0" max="5" step="0.1" value="0" oninput="updateLabels(); runSearchIfReady()" />
+            <input type="range" id="minRating" min="0" max="5" step="0.1" value="0" oninput="updateLabels(); runSearchDebounced()" />
           </div>
           <div class="field">
             <label>Min topic match: <b id="minMatchVal">any</b></label>
-            <input type="range" id="minMatch" min="0" max="100" step="5" value="0" oninput="updateLabels(); runSearchIfReady()" />
+            <input type="range" id="minMatch" min="0" max="100" step="5" value="0" oninput="updateLabels(); runSearchDebounced()" />
           </div>
         </div>
       </details>
@@ -166,8 +176,35 @@
     const input = document.getElementById("q");
     const button = document.getElementById("go");
     const resultsDiv = document.getElementById("results");
-    let rangeChanged = false;
 
+    // --- Auth-aware top nav: reflects whether you're signed in ---
+    function escapeHtml(s) {
+      return (s || "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+    }
+    (async function loadNav() {
+      const nav = document.getElementById("topnav");
+      const loggedOut = `<a href="/login">Log in</a><a class="primary" href="/signup">Sign up</a>`;
+      try {
+        const res = await fetch("/api/me");
+        if (res.ok) {
+          const me = await res.json();
+          nav.innerHTML = `<span class="who">${escapeHtml(me.name)}</span>`
+            + `<a href="/me">My profile</a>`
+            + `<button onclick="logoutNav()">Log out</button>`;
+        } else {
+          nav.innerHTML = loggedOut;
+        }
+      } catch (_) {
+        nav.innerHTML = loggedOut;
+      }
+    })();
+    async function logoutNav() { await fetch("/api/logout", { method: "POST" }); location.reload(); }
+    let rangeChanged = false;
+    let debounceTimer = null;
+    function runSearchDebounced(delay = 400) {
+      clearTimeout(debounceTimer);                 // cancel any pending search
+      debounceTimer = setTimeout(runSearchIfReady, delay);  // schedule a fresh one
+    }
     function currentSort() { return document.getElementById("sortSelect").value; }
     function onSortChange() {
       if (input.value.trim()) runSearch();
@@ -276,7 +313,7 @@
             <div class="rank">${i + 1}</div>
             <div class="card-body">
               <div class="card-head">
-                <h3>${t.name}</h3>
+                <h3><a href="/u/${t.id}">${t.name}</a></h3>
                 <div class="pills">${nowPill}<span class="pill">★ ${t.rating}</span><span class="pill">$${t.rate}/hr</span></div>
               </div>
               <p class="expertise">${t.expertise}</p>
