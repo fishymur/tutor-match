@@ -5,3 +5,4 @@
 6. Ranking system of tutor based on subject
 7. ELO, too smart for me, too dumb for me
 8. Scale a chatting system, video call system, file sharing system with tutor
+9. Number of reviews, not just the score 

@@ -1,13 +1,3 @@
-"""SQLite persistence for TutorMatch accounts and profiles.
-
-One `users` table holds students, tutors, and hybrids. A tutor's `specialties`
-string is what the matching engine embeds (it plays the role the old
-`expertise` field did in tutors.json), so a tutor who signs up and fills in
-their profile flows straight into search results.
-
-For real deployment, swap this file for Postgres + pgvector — the function
-signatures are the seam to do that behind.
-"""
 import os
 import json
 import sqlite3
@@ -41,24 +31,19 @@ CREATE TABLE IF NOT EXISTS users (
 );
 """
 
-# Columns a user is allowed to change on their own profile.
 EDITABLE = {"name", "role", "bio", "specialties", "learning", "education",
             "languages", "rate", "tz", "avail_start", "avail_end"}
 
-# Columns exposed on a public profile (never password_hash or email).
 PUBLIC = ("id", "name", "role", "bio", "specialties", "learning",
           "education", "languages", "rate", "tz", "avail_start",
           "avail_end", "rating")
-
 
 def connect():
     conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row
     return conn
 
-
 def init(path=None, seed=True):
-    """Create the schema (and optionally seed from tutors.json). Idempotent."""
     global DB_PATH
     if path:
         DB_PATH = path
@@ -69,9 +54,8 @@ def init(path=None, seed=True):
         _seed_from_json(conn)
     conn.close()
 
-
+# Load the tutors in if empty
 def _seed_from_json(conn):
-    """Load the starter tutors as tutor accounts, only if the table is empty."""
     if conn.execute("SELECT COUNT(*) AS n FROM users").fetchone()["n"] > 0:
         return
     try:
@@ -95,7 +79,6 @@ def _seed_from_json(conn):
         )
     conn.commit()
 
-
 def create_user(email, password_hash, name, role):
     conn = connect()
     now = datetime.datetime.utcnow().isoformat()
@@ -108,13 +91,11 @@ def create_user(email, password_hash, name, role):
     conn.close()
     return uid
 
-
 def get_user(uid):
     conn = connect()
     row = conn.execute("SELECT * FROM users WHERE id=?", (uid,)).fetchone()
     conn.close()
     return dict(row) if row else None
-
 
 def get_user_by_email(email):
     conn = connect()
@@ -122,9 +103,7 @@ def get_user_by_email(email):
     conn.close()
     return dict(row) if row else None
 
-
 def update_profile(uid, fields):
-    """Update only the editable columns present (and non-None) in `fields`."""
     sets = {k: v for k, v in fields.items() if k in EDITABLE and v is not None}
     if not sets:
         return
@@ -134,18 +113,10 @@ def update_profile(uid, fields):
     conn.commit()
     conn.close()
 
-
 def public_view(user):
-    """Strip a user row down to the fields safe to show publicly."""
     return {k: user.get(k) for k in PUBLIC}
 
-
 def list_matchable_tutors():
-    """Tutors/hybrids with enough profile filled in to appear in search.
-
-    Shaped exactly like the old tutors.json entries so the engine is agnostic
-    about where the data came from.
-    """
     conn = connect()
     rows = conn.execute(
         "SELECT id, name, specialties, rating, rate, tz, avail_start, avail_end FROM users "

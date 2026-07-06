@@ -1,11 +1,9 @@
 import os
 from pathlib import Path
-
 from fastapi import FastAPI, Request
 from fastapi.responses import FileResponse, JSONResponse
 from starlette.middleware.sessions import SessionMiddleware
 from pydantic import BaseModel
-
 from . import db, auth, engine
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -18,26 +16,22 @@ app.add_middleware(
     https_only=False,
 )
 
-
 @app.on_event("startup")
 def _startup():
     db.init()               # create schema + seed the starter tutors if empty
     engine.rebuild_index()  # embed the current tutor pool
 
 
-# --------------------------- request models ---------------------------
-
+# Request Models
 class SignupIn(BaseModel):
     email: str
     password: str
     name: str
     role: str
 
-
 class LoginIn(BaseModel):
     email: str
     password: str
-
 
 class ProfileIn(BaseModel):
     name: str | None = None
@@ -53,12 +47,10 @@ class ProfileIn(BaseModel):
     avail_end: int | None = None
 
 
-# --------------------------- helpers ---------------------------
-
+# Helper Functions
 def _current_user(request: Request):
     uid = request.session.get("uid")
     return db.get_user(uid) if uid else None
-
 
 def _err(status, msg):
     return JSONResponse(status_code=status, content={"error": msg})
@@ -74,15 +66,8 @@ _FRIENDLY = {
     "learning": "currently learning",
 }
 
-
+# Returns missing field for each role when creating a profile with that type
 def _missing_required(role, merged):
-    """Return the friendly names of required fields still empty for this role.
-
-    Tutors and hybrids must complete their tutoring details; students and
-    hybrids must say what they're learning. Validated against the merged
-    (existing + incoming) profile, so a partial update never trips on a field
-    that's already saved.
-    """
     def blank_text(k):
         v = merged.get(k)
         return not (isinstance(v, str) and v.strip())
@@ -103,8 +88,7 @@ def _missing_required(role, merged):
     return missing
 
 
-# --------------------------- auth API ---------------------------
-
+# Authorization API
 @app.post("/api/signup")
 def signup(body: SignupIn, request: Request):
     email = body.email.strip().lower()
@@ -123,7 +107,6 @@ def signup(body: SignupIn, request: Request):
     request.session["uid"] = uid
     return db.public_view(db.get_user(uid))
 
-
 @app.post("/api/login")
 def login(body: LoginIn, request: Request):
     user = db.get_user_by_email(body.email)
@@ -132,12 +115,10 @@ def login(body: LoginIn, request: Request):
     request.session["uid"] = user["id"]
     return db.public_view(user)
 
-
 @app.post("/api/logout")
 def logout(request: Request):
     request.session.clear()
     return {"ok": True}
-
 
 @app.get("/api/me")
 def me(request: Request):
@@ -147,7 +128,6 @@ def me(request: Request):
     out = db.public_view(user)
     out["email"] = user["email"]  # own email is fine to return to the owner
     return out
-
 
 @app.post("/api/profile")
 def update_profile(body: ProfileIn, request: Request):
@@ -192,8 +172,7 @@ def public_profile(uid: int):
     return db.public_view(user)
 
 
-# --------------------------- search API (unchanged behavior) ---------------------------
-
+# Search API
 @app.get("/search")
 def search_endpoint(
     q: str, k: int = 8, sort: str = "match",
@@ -213,8 +192,7 @@ def search_endpoint(
         return _err(502, "The matching service is temporarily unavailable. Please try again.")
 
 
-# --------------------------- pages ---------------------------
-
+#Pages API
 @app.get("/")
 def home():
     return FileResponse(FRONTEND_DIR / "index.html")

@@ -1,32 +1,13 @@
-"""Benchmark harness for the tutor-matching engine.
-
-Runs against the SAME tutor data the live app serves (tutors.json) — no more
-hardcoded copies that drift out of sync.
-
-Two arms are measured so the README's comparison is reproducible:
-  1. "semantic"  — embed the raw student query directly.
-  2. "intake"    — rewrite the query with the LLM intake agent first, then embed.
-
-The intake arm only runs if an ANTHROPIC_API_KEY is available (it makes API
-calls). The semantic arm needs only the embedding model, so it always runs.
-
-Usage:
-    python3 evaluate.py                       # both arms if key is set, else semantic only
-    python3 evaluate.py --no-intake           # semantic arm only (no API calls)
-    python3 evaluate.py --model all-MiniLM-L6-v2   # try a different embedding model
-"""
 import os
 import json
 import argparse
 
 from sentence_transformers import SentenceTransformer, util
 
-# --- Data: the single source of truth, identical to what the engine serves ---
 with open("tutors.json", "r", encoding="utf-8") as f:
     tutors = json.load(f)
 
-# Evaluation query set, each labeled with the tutor(s) that should surface.
-# Queries are phrased the vague, plain-English way a student actually would.
+# Evaluation Set
 test_set = [
     {"query": "I want to prove smoking causes cancer, not just that they correlate", "correct": ["Pearl"]},
     {"query": "teaching a computer to tell cats from dogs in photos",                "correct": ["Hinton"]},
@@ -50,23 +31,21 @@ test_set = [
     {"query": "structure learning for a network of cause-and-effect variables",      "correct": ["Pearl"]},
 ]
 
-# Fail fast if a label no longer matches a tutor in the data.
+# Early fail if the tutor is not contained in the filtered data
 tutor_names = {t["name"] for t in tutors}
 for case in test_set:
     for name in case["correct"]:
         if name not in tutor_names:
             raise SystemExit(f"Label error: '{name}' is not a tutor in tutors.json.")
 
-
+# Returns the tutor and match value by cosine distance
 def score_query(query_text, tutor_embeddings):
-    """Return (score, tutor) pairs ranked by cosine similarity to the given text."""
     q_emb = model.encode(query_text)
     scores = util.cos_sim(q_emb, tutor_embeddings)[0].tolist()
     return sorted(zip(scores, tutors), key=lambda p: p[0], reverse=True)
 
-
+# Runs benchmark over all queries and returns recall@1, recall@3, MRR
 def run_arm(name, transform, tutor_embeddings, verbose=True):
-    """Evaluate one arm. `transform` maps a raw query to the text we embed."""
     recall_1 = recall_3 = 0
     reciprocal_ranks = []
     if verbose:
@@ -101,24 +80,20 @@ def run_arm(name, transform, tutor_embeddings, verbose=True):
         "counts": (recall_1, recall_3, n),
     }
 
-
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Benchmark the tutor-matching engine.")
     parser.add_argument("--model", default="all-mpnet-base-v2", help="sentence-transformers model name")
     parser.add_argument("--no-intake", action="store_true", help="skip the LLM intake arm (no API calls)")
     args = parser.parse_args()
-
     MODEL_NAME = args.model
     print(f"Loading embedding model: {MODEL_NAME} ...")
     model = SentenceTransformer(MODEL_NAME)
     tutor_embeddings = model.encode([t["expertise"] for t in tutors])
     print(f"Benchmarking against {len(tutors)} tutors, {len(test_set)} queries.")
-
     results = [run_arm("semantic", lambda q: q, tutor_embeddings)]
-
     want_intake = not args.no_intake and bool(os.environ.get("ANTHROPIC_API_KEY"))
     if want_intake:
-        from intake import rewrite_query  # imported lazily: constructing the client needs the key
+        from app.intake import rewrite_query
         results.append(run_arm("intake", rewrite_query, tutor_embeddings))
     elif not args.no_intake:
         print("\n(Skipping intake arm: ANTHROPIC_API_KEY is not set. "

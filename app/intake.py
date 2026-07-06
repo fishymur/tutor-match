@@ -2,8 +2,7 @@ from anthropic import Anthropic
 
 client = Anthropic()
 
-# Cache rewrites so repeating a query (e.g. changing sort or filters) doesn't
-# re-call the API — the same query text always maps to the same rewrite.
+#Prevents recalling same query
 _rewrite_cache = {}
 
 def rewrite_query(raw_query):
@@ -15,7 +14,7 @@ def rewrite_query(raw_query):
     prompt = (
         "A student described what they need help with, often vaguely or in plain English. "
         "Rewrite it as a short comma-separated list of the precise academic topics and "
-        "keywords a tutor would list on their profile. "
+        "keywords a tutor would list on their profile as thier specialties. "
         "Output ONLY the keywords — no preamble, no explanation.\n\n"
         f'Student request: "{raw_query}"'
     )

@@ -1,20 +1,10 @@
-"""Keyword-matching baseline.
-
-The naive approach the rest of the project improves on: score tutors purely by
-how many words their expertise literally shares with the query. It reads from
-tutors.json so there is one source of truth for tutor data across the repo.
-
-Run it to see the baseline fail on paraphrased queries (e.g. "conditional
-expectation" shares no words with "probability theory, measure theory").
-"""
 import json
 
 with open("tutors.json", "r", encoding="utf-8") as f:
     tutors = json.load(f)
 
-
+# Only exact overlaps
 def match(query, tutors):
-    """Rank tutors by literal word overlap between query and expertise."""
     query_words = set(query.lower().split())
     scored = []
     for t in tutors:
