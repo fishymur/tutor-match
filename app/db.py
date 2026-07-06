@@ -10,6 +10,7 @@ SEED_FILE = os.environ.get("TM_TUTORS", str(BASE_DIR / "data" / "tutors.json"))
 
 ROLES = {"student", "tutor", "hybrid"}
 
+# One table for all three roles. Constraints (UNIQUE email, CHECK on role, NOT NULLs)
 SCHEMA = """
 CREATE TABLE IF NOT EXISTS users (
     id            INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -38,6 +39,7 @@ PUBLIC = ("id", "name", "role", "bio", "specialties", "learning",
           "education", "languages", "rate", "tz", "avail_start",
           "avail_end", "rating")
 
+# Open a DB connection; row_factory lets us read columns by name
 def connect():
     conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row
@@ -65,7 +67,7 @@ def _seed_from_json(conn):
         return
 
     from .auth import hash_password
-    placeholder = hash_password(os.urandom(12).hex())  # seed accounts aren't meant to be logged into
+    placeholder = hash_password(os.urandom(12).hex())
     now = datetime.datetime.utcnow().isoformat()
     for t in data:
         email = f"{t['name'].lower().replace(' ', '')}@seed.tutormatch.local"

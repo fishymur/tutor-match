@@ -18,8 +18,8 @@ app.add_middleware(
 
 @app.on_event("startup")
 def _startup():
-    db.init()               # create schema + seed the starter tutors if empty
-    engine.rebuild_index()  # embed the current tutor pool
+    db.init()           
+    engine.rebuild_index()
 
 
 # Request Models
@@ -126,7 +126,7 @@ def me(request: Request):
     if not user:
         return _err(401, "Not signed in.")
     out = db.public_view(user)
-    out["email"] = user["email"]  # own email is fine to return to the owner
+    out["email"] = user["email"]
     return out
 
 @app.post("/api/profile")
@@ -192,7 +192,7 @@ def search_endpoint(
         return _err(502, "The matching service is temporarily unavailable. Please try again.")
 
 
-#Pages API
+# Pages API
 @app.get("/")
 def home():
     return FileResponse(FRONTEND_DIR / "index.html")

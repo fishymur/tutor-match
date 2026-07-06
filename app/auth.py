@@ -1,11 +1,8 @@
-"""
-Uses PBKDF2-HMAC-SHA256. Stored format:
-    pbkdf2_sha256$<iterations>$<salt_hex>$<hash_hex>
-"""
 import os
 import hmac
 import hashlib
 
+#Uses PBKDF2-HMAC-SHA256. Stored format: pbkdf2_sha256$<iterations>$<salt_hex>$<hash_hex>
 ITERATIONS = 200_000
 
 def hash_password(password):
